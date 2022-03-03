@@ -44,6 +44,7 @@ public class BaseTest {
         driver.get("https://www.selenium.dev/");
         WebElement headerElement = driver.findElement(By.tagName("h1"));
         String header = headerElement.getText();
+        log.info("Header is '{}'", header);
         assertEquals("Selenium automates browsers. That's it!", header,
                 format("The message hasn't been equal '%s'", header));
     }
