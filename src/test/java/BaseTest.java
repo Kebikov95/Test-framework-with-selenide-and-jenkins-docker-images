@@ -7,35 +7,50 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
-import java.time.Duration;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Map;
 
 import static java.lang.String.format;
 import static org.apache.logging.log4j.LogManager.getLogger;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class BaseTest {
+class BaseTest {
 
     private WebDriver driver;
-    private static WebDriverManager wdm;
     private static final Logger log = getLogger(BaseTest.class);
 
     @BeforeAll
     static void setupClass() {
-        wdm = WebDriverManager.chromedriver().browserInDocker();
+        WebDriverManager.chromedriver().browserInDocker();
     }
 
     @BeforeEach
-    void setupTest() {
-        log.info("Setup driver...");
-        driver = wdm.create();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+    void setupTest() throws MalformedURLException {
+        DesiredCapabilities capabilities = new DesiredCapabilities();
+        capabilities.setBrowserName("chrome");
+        capabilities.setVersion("98.0");
+        capabilities.setCapability("headless", true);
+        capabilities.setCapability("selenoid:options", Map.<String, Object>of(
+                "enableVNC", true,
+                "enableVideo", false
+        ));
+        driver = new RemoteWebDriver(
+                new URL("http://localhost:4444/wd/hub"),
+                capabilities
+        );
     }
 
     @AfterEach
     void teardown() {
         log.info("Close driver...");
-        wdm.quit();
+        if (driver != null) {
+            driver.close();
+            driver = null;
+        }
     }
 
     @Test

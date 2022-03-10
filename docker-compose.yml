@@ -1,0 +1,42 @@
+version: '3'
+services:
+  jenkins:
+    image: jenkins/jenkins:lts
+    privileged: true
+    user: root
+    ports:
+      - "8081:8080"
+      - "50000:50000"
+    container_name: jenkins
+    volumes:
+      - ~/jenkins:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /usr/local/bin/docker:/usr/local/bin/docker
+
+  selenoid:
+    network_mode: bridge
+    image: aerokube/selenoid:latest-release
+    volumes:
+      - ~/selenoid/etc/selenoid:/etc/selenoid
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ~/selenoid/etc/video:/opt/selenoid/video
+      - ~/selenoid/etc/logs:/opt/selenoid/logs
+    environment:
+      - OVERRIDE_VIDEO_OUTPUT_DIR=~/selenoid/etc/video
+    command: ["-conf", "/etc/selenoid/browsers.json", "-video-output-dir", "/opt/selenoid/video", "-log-output-dir", "/opt/selenoid/logs"]
+    ports:
+      - "4444:4444"
+
+  selenoid-ui:
+    hostname: selenoid-ui
+    image: aerokube/selenoid-ui:latest
+    network_mode: bridge
+    links:
+      - selenoid
+    ports:
+      - "8080:8080"
+    command: ["--selenoid-uri", "http://selenoid:4444"]
+
+  selenoid-chrome:
+    hostname: selenoid-chrome
+    image: selenoid/vnc_chrome:98.0
