@@ -39,7 +39,7 @@ class BaseTest {
                 "enableVideo", false
         ));
         driver = new RemoteWebDriver(
-                URI.create("http://localhost:4444").toURL(),
+                URI.create("http://selenoid:4444").toURL(),
                 capabilities
         );
     }
