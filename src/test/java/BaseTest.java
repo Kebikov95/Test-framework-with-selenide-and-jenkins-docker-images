@@ -39,7 +39,7 @@ class BaseTest {
                 "enableVideo", false
         ));
         driver = new RemoteWebDriver(
-                URI.create("http://jenkins:4444").toURL(),
+                URI.create("http://172.19.0.2:4444").toURL(),
                 capabilities
         );
     }
