@@ -39,7 +39,7 @@ class BaseTest {
                 "enableVideo", false
         ));
         driver = new RemoteWebDriver(
-                new URL("http://localhost:4444/wd/hub"),
+                new URL("http://selenoid:4444/wd/hub"),
                 capabilities
         );
     }
