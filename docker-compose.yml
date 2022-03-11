@@ -41,3 +41,11 @@ services:
   selenoid-chrome:
     hostname: selenoid-chrome
     image: selenoid/vnc_chrome:98.0
+    links:
+      - selenoid
+
+  selenoid-recorder:
+    hostname: selenoid-recorder
+    image: selenoid/video-recorder
+    links:
+      - selenoid

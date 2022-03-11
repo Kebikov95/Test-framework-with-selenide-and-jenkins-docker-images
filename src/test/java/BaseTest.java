@@ -31,12 +31,13 @@ class BaseTest {
 
     @BeforeEach
     void setupTest() throws MalformedURLException {
+        WebDriverManager.chromedriver().browserInDocker().setup();
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("browserName", "chrome");
         capabilities.setCapability("browserVersion", "99.0");
         capabilities.setCapability("selenoid:options", Map.<String, Object>of(
-                "enableVNC", true,
-                "enableVideo", true
+                "enableVNC", false,
+                "enableVideo", false
         ));
         driver = new RemoteWebDriver(
                 URI.create("http://jenkins:4444/wd/hub").toURL(),
