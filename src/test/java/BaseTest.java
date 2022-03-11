@@ -11,6 +11,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 import java.util.Map;
 
@@ -31,15 +32,14 @@ class BaseTest {
     @BeforeEach
     void setupTest() throws MalformedURLException {
         DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setBrowserName("chrome");
-        capabilities.setVersion("98.0");
-        capabilities.setCapability("headless", true);
+        capabilities.setCapability("browserName", "chrome");
+        capabilities.setCapability("browserVersion", "99.0");
         capabilities.setCapability("selenoid:options", Map.<String, Object>of(
-                "enableVNC", false,
-                "enableVideo", false
+                "enableVNC", true,
+                "enableVideo", true
         ));
         driver = new RemoteWebDriver(
-                new URL("http://selenoid:4444/wd/hub"),
+                URI.create("http://selenoid:4444/wd/hub").toURL(),
                 capabilities
         );
     }
