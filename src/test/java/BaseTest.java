@@ -12,7 +12,6 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.net.MalformedURLException;
 import java.net.URI;
-import java.net.URL;
 import java.util.Map;
 
 import static java.lang.String.format;
@@ -40,7 +39,7 @@ class BaseTest {
                 "enableVideo", false
         ));
         driver = new RemoteWebDriver(
-                URI.create("http://jenkins:4444/wd/hub").toURL(),
+                URI.create("http://0.0.0.0:4444/wd/hub").toURL(),
                 capabilities
         );
     }
