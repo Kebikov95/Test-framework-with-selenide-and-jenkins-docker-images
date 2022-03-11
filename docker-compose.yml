@@ -41,7 +41,7 @@ services:
 
   selenoid-chrome:
     hostname: selenoid-chrome
-    image: selenoid/vnc_chrome:98.0
+    image: selenoid/vnc_chrome:99.0
     links:
       - selenoid
 
