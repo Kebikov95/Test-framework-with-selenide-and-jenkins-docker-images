@@ -15,6 +15,7 @@ services:
       - /usr/local/bin/docker:/usr/local/bin/docker
 
   selenoid:
+    hostname: selenoid
     network_mode: bridge
     image: aerokube/selenoid:latest-release
     volumes:
