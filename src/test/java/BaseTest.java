@@ -35,7 +35,7 @@ class BaseTest {
         capabilities.setVersion("98.0");
         capabilities.setCapability("headless", true);
         capabilities.setCapability("selenoid:options", Map.<String, Object>of(
-                "enableVNC", true,
+                "enableVNC", false,
                 "enableVideo", false
         ));
         driver = new RemoteWebDriver(
