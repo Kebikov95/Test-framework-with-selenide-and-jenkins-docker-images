@@ -39,7 +39,7 @@ class BaseTest {
                 "enableVideo", false
         ));
         driver = new RemoteWebDriver(
-                URI.create("http://0.0.0.0:4444/wd/hub").toURL(),
+                URI.create("0.0.0.0:4444/wd/hub").toURL(),
                 capabilities
         );
     }
