@@ -31,7 +31,7 @@ class BaseTest {
     void setupTest() throws MalformedURLException {
         ChromeOptions options = new ChromeOptions();
         options.setHeadless(true);
-        driver = new RemoteWebDriver(new URL("http://localhost:4444/"), options);
+        driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), options);
     }
 
     @AfterEach
