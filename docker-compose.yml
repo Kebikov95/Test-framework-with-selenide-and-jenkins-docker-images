@@ -13,28 +13,20 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - /usr/local/bin/docker:/usr/local/bin/docker
 
-  selenium-hub:
-    image: selenium/hub:latest
-    container_name: selenium-hub
+  selenoid:
+    image: "aerokube/selenoid"
+    network_mode: bridge
     ports:
       - "4444:4444"
-
-  chrome:
-    image: selenium/node-chrome:latest
     volumes:
-      - /dev/shm:/dev/shm
-    depends_on:
-      - selenium-hub
-    environment:
-      - HUB_HOST=selenium-hub
-      - HUB_PORT=4444
+      - "~/selenoid/etc/selenoid:/etc/selenoid/" # assumed current dir contains browsers.json
+      - "/var/run/docker.sock:/var/run/docker.sock"
 
-  firefox:
-    image: selenium/node-firefox:latest
-    volumes:
-      - /dev/shm:/dev/shm
-    depends_on:
-      - selenium-hub
-    environment:
-      - HUB_HOST=selenium-hub
-      - HUB_PORT=4444
+  selenoid-ui:
+    image: "aerokube/selenoid-ui"
+    network_mode: bridge
+    links:
+      - selenoid
+    ports:
+      - "8080:8080"
+    command: ["--selenoid-uri", "http://selenoid:4444"]
