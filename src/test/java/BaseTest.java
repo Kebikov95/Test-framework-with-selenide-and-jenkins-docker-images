@@ -7,6 +7,11 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.RemoteWebDriver;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import static java.lang.String.format;
 import static org.apache.logging.log4j.LogManager.getLogger;
@@ -18,16 +23,9 @@ class BaseTest {
     private WebDriver driver;
     private static final Logger log = getLogger(BaseTest.class);
 
-    @BeforeAll
-    static void setupClass() {
-        manager = WebDriverManager.chromedriver().browserInDocker()
-                .enableVnc()
-                .enableRecording();
-    }
-
     @BeforeEach
-    void setupTest() {
-        driver = manager.create();
+    void setupTest() throws MalformedURLException {
+        driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), new ChromeOptions());
     }
 
     @AfterEach
