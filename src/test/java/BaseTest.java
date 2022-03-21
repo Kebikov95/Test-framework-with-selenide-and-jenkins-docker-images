@@ -19,7 +19,7 @@ public class BaseTest {
 
     private static WebDriverManager wdm;
     private static WebDriver wrappedDriver;
-    private ThreadLocal<WebDriver> instances = new ThreadLocal<>();
+    private final ThreadLocal<WebDriver> instances = new ThreadLocal<>();
     private static final Logger log = getLogger(BaseTest.class);
 
     private WebDriver getDriver() {
@@ -62,7 +62,7 @@ public class BaseTest {
 
     @Test
     @Description("Base test for testing header on selenium.dev page")
-    void baseTest() {
+    void checkHeaderOnSeleniumPage() {
         log.info("The base test has been started...");
         wrappedDriver.get("https://www.selenium.dev/");
         WebElement headerElement = wrappedDriver.findElement(By.tagName("h1"));
@@ -72,11 +72,11 @@ public class BaseTest {
                 format("The message hasn't been equal '%s'", header));
     }
 
-    @ParameterizedTest
-    @ValueSource(strings = {"selenium", "postman", "api", "grafana", "jenkins"})
+    @Test
     @Description("Test to check the content of the request in all description lines")
-    void baseTest2(String query) {
+    void checkRequestQueryToContent() {
         log.info("The base test has been started...");
+        String query = "selenium";
         wrappedDriver.get("https://www.google.com/");
         WebElement input = wrappedDriver.findElement(By.name("q"));
         input.sendKeys(query);
