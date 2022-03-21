@@ -1,6 +1,5 @@
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.logging.log4j.Logger;
-import org.checkerframework.checker.units.qual.C;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -8,35 +7,35 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.remote.RemoteWebDriver;
 
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.time.Duration;
 
 import static java.lang.String.format;
 import static org.apache.logging.log4j.LogManager.getLogger;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class BaseTest {
+public class BaseTest {
 
     private WebDriver driver;
+    private static WebDriverManager wdm;
     private static final Logger log = getLogger(BaseTest.class);
 
+    @BeforeAll
+    static void setupClass() {
+        wdm = WebDriverManager.chromedriver().browserInDocker();
+    }
+
     @BeforeEach
-    void setupTest() throws MalformedURLException {
-        ChromeOptions options = new ChromeOptions();
-        options.setHeadless(true);
-        driver = new RemoteWebDriver(new URL("http://localhost:4444/"), options);
+    void setupTest() {
+        log.info("Setup driver...");
+        driver = wdm.create();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
     }
 
     @AfterEach
     void teardown() {
         log.info("Close driver...");
-        if (driver != null) {
-            driver.close();
-            driver = null;
-        }
+        wdm.quit();
     }
 
     @Test
