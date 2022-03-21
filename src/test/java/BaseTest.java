@@ -19,19 +19,20 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class BaseTest {
 
+    private static WebDriverManager manager;
     private WebDriver driver;
     private static final Logger log = getLogger(BaseTest.class);
 
     @BeforeAll
     static void setupClass() {
-        WebDriverManager.chromedriver().browserInDocker().setup();
+        manager = WebDriverManager.chromedriver().browserInDocker()
+                .enableVnc()
+                .enableRecording();
     }
 
     @BeforeEach
-    void setupTest() throws MalformedURLException {
-        ChromeOptions options = new ChromeOptions();
-        options.setHeadless(true);
-        driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), options);
+    void setupTest() {
+        driver = manager.create();
     }
 
     @AfterEach
