@@ -25,7 +25,7 @@ class BaseTest {
 
     @BeforeEach
     void setupTest() throws MalformedURLException {
-        driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), new ChromeOptions());
+        driver = new RemoteWebDriver(new URL("http://localhost:4444/"), new ChromeOptions());
     }
 
     @AfterEach
