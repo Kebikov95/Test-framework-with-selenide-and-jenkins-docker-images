@@ -1,5 +1,6 @@
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.logging.log4j.Logger;
+import org.checkerframework.checker.units.qual.C;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,13 +20,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class BaseTest {
 
-    private static WebDriverManager manager;
     private WebDriver driver;
     private static final Logger log = getLogger(BaseTest.class);
 
     @BeforeEach
     void setupTest() throws MalformedURLException {
-        driver = new RemoteWebDriver(new URL("http://localhost:4444/"), new ChromeOptions());
+        ChromeOptions options = new ChromeOptions();
+        options.setHeadless(true);
+        driver = new RemoteWebDriver(new URL("http://localhost:4444/"), options);
     }
 
     @AfterEach
