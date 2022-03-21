@@ -7,12 +7,11 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.net.MalformedURLException;
-import java.net.URI;
-import java.util.Map;
+import java.net.URL;
 
 import static java.lang.String.format;
 import static org.apache.logging.log4j.LogManager.getLogger;
@@ -25,23 +24,14 @@ class BaseTest {
 
     @BeforeAll
     static void setupClass() {
-        WebDriverManager.chromedriver().browserInDocker();
+        WebDriverManager.chromedriver().browserInDocker().setup();
     }
 
     @BeforeEach
     void setupTest() throws MalformedURLException {
-        WebDriverManager.chromedriver().browserInDocker().setup();
-        DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setCapability("browserName", "chrome");
-        capabilities.setCapability("browserVersion", "99.0");
-        capabilities.setCapability("selenoid:options", Map.<String, Object>of(
-                "enableVNC", false,
-                "enableVideo", false
-        ));
-        driver = new RemoteWebDriver(
-                URI.create("http://172.19.0.2:4444").toURL(),
-                capabilities
-        );
+        ChromeOptions options = new ChromeOptions();
+        options.setHeadless(true);
+        driver = new RemoteWebDriver(new URL("http://localhost:4444/"), options);
     }
 
     @AfterEach
