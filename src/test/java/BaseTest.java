@@ -9,10 +9,10 @@ import static org.apache.logging.log4j.LogManager.getLogger;
 
 public class BaseTest {
 
+    protected static final Logger log = getLogger(BaseTest.class);
     private static WebDriverManager wdm;
     private final ThreadLocal<WebDriver> instances = new ThreadLocal<>();
     protected static WebDriver wrappedDriver;
-    protected static final Logger log = getLogger(BaseTest.class);
 
     protected WebDriver getDriver() {
         log.info("Getting instance of browser");
