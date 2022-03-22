@@ -27,7 +27,8 @@ public class BaseTest {
                 .enableRecording()
                 .enableVnc()
                 .dockerShmSize("2g")
-                .dockerTmpfsSize("1g");
+                .dockerTmpfsSize("1g")
+                .dockerRecordingOutput("records");
     }
 
     @BeforeEach
