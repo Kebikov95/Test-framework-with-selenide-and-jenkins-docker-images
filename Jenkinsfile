@@ -8,7 +8,6 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh "docker-compose up -d"
                 git branch: 'main', credentialsId: '8c71ff9f-7bdd-4629-8382-24213a2ecab3', url: 'https://github.com/Kebikov95/Test-framework-with-selenide-and-jenkins-docker-images.git'
             }
         }
