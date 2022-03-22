@@ -8,6 +8,10 @@
     <artifactId>Test-framework-with-selenide-and-jenkins-docker-images</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <properties>
+        <aspectj.version>1.9.8</aspectj.version>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
@@ -73,7 +77,7 @@
             <plugins>
                 <plugin>
                     <artifactId>maven-surefire-plugin</artifactId>
-                    <version>2.22.2</version>
+                    <version>3.0.0-M3</version>
                     <configuration>
                         <testFailureIgnore>false</testFailureIgnore>
                         <argLine>
@@ -95,7 +99,7 @@
                         <dependency>
                             <groupId>org.aspectj</groupId>
                             <artifactId>aspectjweaver</artifactId>
-                            <version>1.9.8</version>
+                            <version>${aspectj.version}</version>
                         </dependency>
                     </dependencies>
                 </plugin>
@@ -110,7 +114,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.10.0</version>
+                    <version>3.10.1</version>
                     <configuration>
                         <source>11</source>
                         <target>11</target>
