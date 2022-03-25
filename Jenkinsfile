@@ -18,7 +18,7 @@ pipeline {
         }
         stage('Archive files') {
             steps {
-                archiveArtifacts artifacts: "target/**", followSymlinks: true
+                archiveArtifacts artifacts: "target/screenshots/**", followSymlinks: true
             }
         }
         stage('Report') {
