@@ -10,7 +10,7 @@ import java.io.IOException;
 import static java.lang.String.format;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class RestAssuredJsonTest extends BaseTest {
+class RestAssuredJsonTest extends BaseTest {
 
     private JsonPath json;
 
