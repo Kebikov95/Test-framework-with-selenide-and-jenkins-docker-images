@@ -10,7 +10,7 @@ import static io.restassured.RestAssured.given;
 import static java.lang.String.format;
 import static org.hamcrest.Matchers.equalTo;
 
-public class RestAssuredTests extends BaseTest {
+class RestAssuredTests extends BaseTest {
 
     String placeId = "be4991b3bc9b4d0a718ac563c49ed483";
     String address = "Gomel";

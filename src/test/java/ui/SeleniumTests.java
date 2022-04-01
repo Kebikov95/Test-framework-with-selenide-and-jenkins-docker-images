@@ -16,7 +16,7 @@ import java.util.List;
 import static java.lang.String.format;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class SeleniumTests extends BaseTest {
+class SeleniumTests extends BaseTest {
 
     @Test
     @Description("Base test for testing header on selenium.dev page")
