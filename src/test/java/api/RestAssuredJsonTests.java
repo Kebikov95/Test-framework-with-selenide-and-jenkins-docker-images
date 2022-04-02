@@ -11,7 +11,7 @@ import java.nio.file.Paths;
 import static java.lang.String.format;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class RestAssuredJsonTest extends BaseTest {
+class RestAssuredJsonTests extends BaseTest {
 
     private JsonPath json;
 

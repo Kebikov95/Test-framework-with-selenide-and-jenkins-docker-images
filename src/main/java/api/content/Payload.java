@@ -1,5 +1,7 @@
 package api.content;
 
+import static java.lang.String.format;
+
 public class Payload {
 
     private Payload() {
@@ -30,5 +32,23 @@ public class Payload {
                 "    \"address\": \"%s\",\n" +
                 "    \"key\": \"qaclick123\"\n" +
                 "}";
+    }
+
+    public static String getAddBookBody() {
+        return "{\n" +
+                "   \"name\":\"Learn Appium Automation with Java\",\n" +
+                "   \"isbn\":\"bcd\",\n" +
+                "   \"aisle\":\"22123397\",\n" +
+                "   \"author\":\"John foe\"\n" +
+                "}";
+    }
+
+    public static String getAddBookBody(String isbn, String value) {
+        return format("{\n" +
+                "   \"name\":\"Learn Appium Automation with Java\",\n" +
+                "   \"%s\":\"%s\",\n" +
+                "   \"aisle\":\"22123397\",\n" +
+                "   \"author\":\"John foe\"\n" +
+                "}", isbn, value);
     }
 }
