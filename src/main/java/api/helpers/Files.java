@@ -19,8 +19,8 @@ public class Files {
     private Files() {
     }
 
-    public static JsonPath readJson(String pathToFile) throws IOException {
-        String str = readString(Paths.get(pathToFile));
+    public static JsonPath readJson(Path path) throws IOException {
+        String str = readString(path);
         return new JsonPath(str);
     }
 

@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.nio.file.Paths;
 
 import static java.lang.String.format;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -16,7 +17,7 @@ class RestAssuredJsonTest extends BaseTest {
 
     @BeforeEach
     void setup() throws IOException {
-        json = Files.readJson("json/courses.json");
+        json = Files.readJson(Paths.get("json/courses.json"));
     }
 
     @Test
