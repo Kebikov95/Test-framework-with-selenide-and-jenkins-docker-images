@@ -1,6 +1,6 @@
 package api;
 
-import api.helpers.Files;
+import framework.helpers.Files;
 import io.restassured.path.json.JsonPath;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

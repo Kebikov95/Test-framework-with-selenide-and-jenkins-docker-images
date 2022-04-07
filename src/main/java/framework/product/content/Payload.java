@@ -1,4 +1,4 @@
-package api.content;
+package framework.product.content;
 
 import static java.lang.String.format;
 

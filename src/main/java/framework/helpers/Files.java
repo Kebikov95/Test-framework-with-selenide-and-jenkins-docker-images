@@ -1,4 +1,4 @@
-package api.helpers;
+package framework.helpers;
 
 import org.apache.logging.log4j.Logger;
 
@@ -8,8 +8,8 @@ import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
+import static java.lang.String.format;
 import static org.apache.logging.log4j.LogManager.getLogger;
 
 public class Files {
@@ -17,6 +17,7 @@ public class Files {
     private static final Logger log = getLogger(Files.class);
 
     private Files() {
+        throw new AssertionError(format("Creation of instance of %s is prohibited.", Files.class));
     }
 
     public static JsonPath readJson(Path path) throws IOException {
