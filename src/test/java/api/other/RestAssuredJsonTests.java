@@ -1,4 +1,4 @@
-package api;
+package api.other;
 
 import framework.helpers.Files;
 import io.restassured.path.json.JsonPath;
@@ -17,7 +17,7 @@ class RestAssuredJsonTests extends BaseTest {
 
     @BeforeEach
     void setup() throws IOException {
-        json = Files.readJson(Paths.get("json/courses.json"));
+        json = Files.readAsJson(Paths.get("json/courses.json"));
     }
 
     @Test

@@ -1,6 +1,6 @@
-package api;
+package api.other;
 
-import framework.product.content.Payload;
+import product.content.Payload;
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import org.junit.jupiter.api.BeforeEach;

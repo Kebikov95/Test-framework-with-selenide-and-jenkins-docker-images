@@ -12,15 +12,15 @@ import java.util.Map;
 import java.util.Objects;
 
 public class HttpClient {
-    private static final String BASE_URL = "";
     private static final String NOT_NULL_URL_MESSAGE = "Relative URL cannot be null.";
     private static final String NOT_NULL_QUERY_PARAMETERS_MESSAGE = "Query parameters cannot be null.";
     private static final String NOT_NULL_HEADERS_MESSAGE = "Request headers cannot be null.";
     private static final String NOT_NULL_REQUEST_BODY_MASSAGE = "Request body cannot be null";
+    private final Map<String, String> defaultQueryParameters = new HashMap<>();
     private final Map<String, String> defaultHeaders = new HashMap<>();
 
-    public HttpClient() {
-        RestAssured.baseURI = BASE_URL;
+    public HttpClient(String baseUrl) {
+        RestAssured.baseURI = baseUrl;
     }
 
     public HttpResponse<JSONObject> get(String relativeUrl, Map<String, String> queryParameters,
@@ -39,6 +39,11 @@ public class HttpClient {
         Objects.requireNonNull(relativeUrl, NOT_NULL_URL_MESSAGE);
         Objects.requireNonNull(queryParameters, NOT_NULL_QUERY_PARAMETERS_MESSAGE);
         return get(relativeUrl, queryParameters, defaultHeaders);
+    }
+
+    public HttpResponse<JSONObject> get(String relativeUrl) {
+        Objects.requireNonNull(relativeUrl, NOT_NULL_URL_MESSAGE);
+        return get(relativeUrl, defaultQueryParameters, defaultHeaders);
     }
 
     public HttpResponse<JSONObject> post(String relativeUrl, Map<String, String> queryParameters, JSONObject requestBody) {

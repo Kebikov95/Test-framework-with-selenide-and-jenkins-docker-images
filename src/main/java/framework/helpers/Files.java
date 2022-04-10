@@ -3,6 +3,9 @@ package framework.helpers;
 import org.apache.logging.log4j.Logger;
 
 import io.restassured.path.json.JsonPath;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import java.io.*;
 import java.nio.charset.Charset;
@@ -20,12 +23,18 @@ public class Files {
         throw new AssertionError(format("Creation of instance of %s is prohibited.", Files.class));
     }
 
-    public static JsonPath readJson(Path path) throws IOException {
-        String str = readString(path);
+    public static JsonPath readAsJson(Path path) throws IOException {
+        String str = readAsString(path);
         return new JsonPath(str);
     }
 
-    public static String readString(Path path) throws IOException {
+    public static JSONObject readAsJSONObject(Path path) throws IOException, ParseException {
+        String str = readAsString(path);
+        JSONParser parser = new JSONParser();
+        return (JSONObject) parser.parse(str);
+    }
+
+    public static String readAsString(Path path) throws IOException {
         log.debug("Get file from resources by path {}", path);
         InputStream inputStream = getFileFromResourcesAsStream(path);
         return convertStreamToString(inputStream);
