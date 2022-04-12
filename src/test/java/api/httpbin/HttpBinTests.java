@@ -1,18 +1,21 @@
 package api.httpbin;
 
-import framework.api.client.HttpResponse;
-import framework.helpers.Files;
+import framework.response.HttpResponse;
+import helpers.Files;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 import org.junit.jupiter.api.Test;
-import product.http.response.JsonResponseFormatBody;
+import product.responses.JsonResponseFormatBody;
 import product.microservices.ResponseFormats;
 
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Map;
 
-import static framework.helpers.JsonRepresentation.convertToJson;
+import static helpers.JsonRepresentation.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class HttpBinTests extends BaseTest {
 
@@ -23,8 +26,34 @@ class HttpBinTests extends BaseTest {
 
         JSONObject expectedJson = Files.readAsJSONObject(Paths.get("json/jsonResponse.json"));
         JsonResponseFormatBody jsonResponseFormatBody = response.getBody();
-        JSONObject jsonAfterSerialization = convertToJson(jsonResponseFormatBody);
-        log.info("\nExp. json: {}\nAct. json: {}", expectedJson, jsonAfterSerialization);
-        assertEquals(expectedJson, jsonAfterSerialization);
+        JSONObject actualJson = convertToJson(jsonResponseFormatBody);
+        log.info("\nExp. json: {}\nAct. json: {}", expectedJson, actualJson);
+        assertEquals(expectedJson, actualJson);
+    }
+
+    @Test
+    void checkGetMethod() {
+        Map<String, String> queryParameters = new HashMap<>();
+        queryParameters.put("company", "Godel");
+        queryParameters.put("city", "Gomel");
+        HttpResponse<JSONObject> response = httpClient.get("get",  queryParameters);
+
+        String args = response.getBody().get("args").toString();
+        log.info("Response args: {}", args);
+        assertEquals(queryParameters.toString(), args);
+    }
+
+    @Test
+    void checkPostMethod() throws IOException, ParseException {
+        Map<String, String> queryParameters = new HashMap<>();
+        queryParameters.put("company", "Godel");
+        queryParameters.put("city", "Gomel");
+        JSONObject requestBody = Files.readAsJSONObject(Paths.get("json/course.json"));
+
+        HttpResponse<JSONObject> response = httpClient.post("post", queryParameters, requestBody);
+        String form = response.getBody().get("form").toString();
+        String expectedCourse = "Selenium Python";
+        log.info("Response body: {}", form);
+        assertTrue(form.contains(expectedCourse));
     }
 }

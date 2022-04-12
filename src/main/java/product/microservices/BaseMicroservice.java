@@ -1,6 +1,6 @@
 package product.microservices;
 
-import framework.api.client.HttpClient;
+import framework.client.HttpClient;
 
 import java.util.Objects;
 

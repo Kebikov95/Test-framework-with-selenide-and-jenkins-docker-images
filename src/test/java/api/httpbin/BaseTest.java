@@ -1,6 +1,6 @@
 package api.httpbin;
 
-import framework.api.client.HttpClient;
+import framework.client.HttpClient;
 import org.apache.logging.log4j.Logger;
 
 import static org.apache.logging.log4j.LogManager.getLogger;
