@@ -1,4 +1,4 @@
-package product.content;
+package product.bo.content;
 
 import static java.lang.String.format;
 

@@ -1,6 +1,6 @@
 package api.other;
 
-import product.content.Payload;
+import product.bo.content.Payload;
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import org.junit.jupiter.api.BeforeEach;

@@ -1,9 +1,9 @@
-package product.http.response;
+package product.responses;
 
-import framework.helpers.JsonRepresentation;
+import helpers.JsonRepresentation;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import product.pojo.SlideshowPojo;
+import product.bo.pojo.SlideshowPojo;
 
 public class JsonResponseFormatBody {
 

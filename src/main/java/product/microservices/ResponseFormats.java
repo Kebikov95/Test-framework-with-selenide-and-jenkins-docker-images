@@ -1,11 +1,11 @@
 package product.microservices;
 
-import framework.api.client.HttpClient;
-import framework.api.client.HttpResponse;
+import framework.client.HttpClient;
+import framework.response.HttpResponse;
 import org.json.simple.JSONObject;
-import product.http.response.JsonResponseFormatBody;
+import product.responses.JsonResponseFormatBody;
 
-import static framework.helpers.JsonRepresentation.convertFromJson;
+import static helpers.JsonRepresentation.convertFromJson;
 
 public class ResponseFormats extends BaseMicroservice {
 

@@ -1,4 +1,4 @@
-package framework.helpers;
+package helpers;
 
 import org.apache.logging.log4j.Logger;
 

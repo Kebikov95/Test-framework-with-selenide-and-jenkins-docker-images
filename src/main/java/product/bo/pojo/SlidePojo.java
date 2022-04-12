@@ -1,4 +1,4 @@
-package product.pojo;
+package product.bo.pojo;
 
 import lombok.Data;
 import lombok.ToString;

@@ -1,6 +1,6 @@
-package framework.api.client;
+package framework.response;
 
-import framework.helpers.JsonRepresentation;
+import helpers.JsonRepresentation;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
