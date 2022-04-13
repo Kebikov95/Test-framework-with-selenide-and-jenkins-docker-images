@@ -6,7 +6,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 import org.junit.jupiter.api.Test;
 import product.responses.JsonResponseFormatBody;
-import product.microservices.ResponseFormats;
+import product.microservices.ResponseFormatsMicroservice;
 
 import java.io.IOException;
 import java.nio.file.Paths;
@@ -21,7 +21,7 @@ class HttpBinTests extends BaseTest {
 
     @Test
     void checkJsonSerialization() throws IOException, ParseException {
-        ResponseFormats responseFormats = new ResponseFormats(httpClient);
+        ResponseFormatsMicroservice responseFormats = new ResponseFormatsMicroservice(httpClient);
         HttpResponse<JsonResponseFormatBody> response = responseFormats.returnJson();
 
         JSONObject expectedJson = Files.readAsJSONObject(Paths.get("json/jsonResponse.json"));

@@ -7,9 +7,9 @@ import product.responses.JsonResponseFormatBody;
 
 import static helpers.JsonRepresentation.convertFromJson;
 
-public class ResponseFormats extends BaseMicroservice {
+public class ResponseFormatsMicroservice extends BaseMicroservice {
 
-    public ResponseFormats(HttpClient httpClient) {
+    public ResponseFormatsMicroservice(HttpClient httpClient) {
         super(httpClient);
     }
 
