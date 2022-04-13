@@ -3,8 +3,11 @@ package api.reqres;
 import framework.enums.HttpStatusCode;
 import framework.response.HttpResponse;
 import jdk.jfr.Description;
+import org.json.simple.parser.ParseException;
 import org.junit.jupiter.api.Test;
+import product.microservices.MethodsMicroservice;
 import product.microservices.UsersMicroservice;
+import product.responses.PersonBody;
 import product.responses.UserBody;
 import product.responses.UsersBody;
 
@@ -49,5 +52,13 @@ class ReqResTests extends BaseTest {
         HttpResponse<UserBody> userBodyHttpResponse = userList.getNotFoundUser();
         assertEquals(HttpStatusCode.NOT_FOUND.getValue(), userBodyHttpResponse.getStatusCode());
         log.info("Status code for not found user: {}", userBodyHttpResponse.getStatusCode());
+    }
+
+    @Test
+    @Description("check POST method for creating person")
+    void checkPostMethod() throws ParseException {
+        MethodsMicroservice postMethod = new MethodsMicroservice(httpClient);
+        HttpResponse<PersonBody> personBodyHttpResponse = postMethod.post();
+        log.info(personBodyHttpResponse.getBody());
     }
 }

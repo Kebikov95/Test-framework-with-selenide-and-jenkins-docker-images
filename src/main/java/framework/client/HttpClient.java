@@ -47,6 +47,11 @@ public class HttpClient {
         return get(relativeUrl, defaultQueryParameters, defaultHeaders);
     }
 
+    public HttpResponse<JSONObject> post(String relativeUrl,JSONObject requestBody) {
+        Objects.requireNonNull(relativeUrl, NOT_NULL_URL_MESSAGE);
+        return post(relativeUrl, defaultQueryParameters, defaultHeaders, requestBody);
+    }
+
     public HttpResponse<JSONObject> post(String relativeUrl, Map<String, String> queryParameters, JSONObject requestBody) {
         Objects.requireNonNull(relativeUrl, NOT_NULL_URL_MESSAGE);
         Objects.requireNonNull(queryParameters, NOT_NULL_QUERY_PARAMETERS_MESSAGE);
@@ -73,7 +78,8 @@ public class HttpClient {
         Objects.requireNonNull(requestBody, NOT_NULL_REQUEST_BODY_MASSAGE);
         RequestSpecification request = RestAssured.given();
         request.headers(requestHeaders);
-        Response response = request.params(requestBody).put(relativeUrl);
+        request.params(requestBody);
+        Response response = request.put(relativeUrl);
         return convertHttpResponse(response);
     }
 

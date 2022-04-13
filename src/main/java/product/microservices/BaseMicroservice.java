@@ -1,10 +1,15 @@
 package product.microservices;
 
 import framework.client.HttpClient;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Objects;
 
+import static org.apache.logging.log4j.LogManager.getLogger;
+
 public class BaseMicroservice {
+
+    protected static final Logger log = getLogger(BaseMicroservice.class);
 
     protected HttpClient httpClient;
 
