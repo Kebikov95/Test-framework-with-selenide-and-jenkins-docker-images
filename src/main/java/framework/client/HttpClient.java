@@ -47,7 +47,7 @@ public class HttpClient {
         return get(relativeUrl, defaultQueryParameters, defaultHeaders);
     }
 
-    public HttpResponse<JSONObject> post(String relativeUrl,JSONObject requestBody) {
+    public HttpResponse<JSONObject> post(String relativeUrl, JSONObject requestBody) {
         Objects.requireNonNull(relativeUrl, NOT_NULL_URL_MESSAGE);
         return post(relativeUrl, defaultQueryParameters, defaultHeaders, requestBody);
     }
@@ -67,7 +67,7 @@ public class HttpClient {
         RequestSpecification request = RestAssured.given();
         request.queryParams(queryParameters);
         request.headers(requestHeaders);
-        request.params(requestBody);
+        request.body(requestBody);
         Response response = request.post(relativeUrl);
         return convertHttpResponse(response);
     }
@@ -78,7 +78,7 @@ public class HttpClient {
         Objects.requireNonNull(requestBody, NOT_NULL_REQUEST_BODY_MASSAGE);
         RequestSpecification request = RestAssured.given();
         request.headers(requestHeaders);
-        request.params(requestBody);
+        request.body(requestBody);
         Response response = request.put(relativeUrl);
         return convertHttpResponse(response);
     }
@@ -104,7 +104,12 @@ public class HttpClient {
     }
 
     private HttpResponse<JSONObject> convertHttpResponse(Response response) {
-        JSONObject body = response.body().as(JSONObject.class);
+        JSONObject body;
+        try {
+            body = response.body().as(JSONObject.class);
+        } catch (IllegalStateException e) {
+            body = new JSONObject();
+        }
         int responseCode = response.getStatusCode();
         Map<String, String> headers = convertHeaders(response.headers());
         return new HttpResponse<>(responseCode, headers, body);
