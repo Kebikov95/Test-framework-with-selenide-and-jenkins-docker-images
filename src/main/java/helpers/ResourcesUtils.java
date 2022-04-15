@@ -15,12 +15,12 @@ import java.nio.file.Path;
 import static java.lang.String.format;
 import static org.apache.logging.log4j.LogManager.getLogger;
 
-public class Files {
+public class ResourcesUtils {
 
-    private static final Logger log = getLogger(Files.class);
+    private static final Logger log = getLogger(ResourcesUtils.class);
 
-    private Files() {
-        throw new AssertionError(format("Creation of instance of %s is prohibited.", Files.class));
+    private ResourcesUtils() {
+        throw new AssertionError(format("Creation of instance of %s is prohibited.", ResourcesUtils.class));
     }
 
     public static JsonPath readAsJson(Path path) throws IOException {
@@ -41,7 +41,7 @@ public class Files {
     }
 
     private static InputStream getFileFromResourcesAsStream(Path path) {
-        ClassLoader classLoader = Files.class.getClassLoader();
+        ClassLoader classLoader = ResourcesUtils.class.getClassLoader();
         InputStream inputStream = classLoader.getResourceAsStream(path.toString());
 
         if (inputStream == null)

@@ -1,7 +1,7 @@
 package api.httpbin;
 
 import framework.response.HttpResponse;
-import helpers.Files;
+import helpers.ResourcesUtils;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 import org.junit.jupiter.api.Test;
@@ -24,7 +24,7 @@ class HttpBinTests extends BaseTest {
         ResponseFormatsMicroservice responseFormats = new ResponseFormatsMicroservice(httpClient);
         HttpResponse<JsonResponseFormatBody> response = responseFormats.returnJson();
 
-        JSONObject expectedJson = Files.readAsJSONObject(Paths.get("json/jsonResponse.json"));
+        JSONObject expectedJson = ResourcesUtils.readAsJSONObject(Paths.get("json/jsonResponse.json"));
         JsonResponseFormatBody jsonResponseFormatBody = response.getBody();
         JSONObject actualJson = convertToJson(jsonResponseFormatBody);
         log.info("\nExp. json: {}\nAct. json: {}", expectedJson, actualJson);
@@ -48,8 +48,7 @@ class HttpBinTests extends BaseTest {
         Map<String, String> queryParameters = new HashMap<>();
         queryParameters.put("company", "Godel");
         queryParameters.put("city", "Gomel");
-        JSONObject requestBody = Files.readAsJSONObject(Paths.get("json/course.json"));
-
+        JSONObject requestBody = ResourcesUtils.readAsJSONObject(Paths.get("json/course.json"));
         HttpResponse<JSONObject> response = httpClient.post("post", queryParameters, requestBody);
         String form = response.getBody().get("form").toString();
         String expectedCourse = "Selenium Python";

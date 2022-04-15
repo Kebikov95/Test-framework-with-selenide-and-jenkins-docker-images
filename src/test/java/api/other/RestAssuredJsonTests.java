@@ -1,6 +1,6 @@
 package api.other;
 
-import helpers.Files;
+import helpers.ResourcesUtils;
 import io.restassured.path.json.JsonPath;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,7 +17,7 @@ class RestAssuredJsonTests extends BaseTest {
 
     @BeforeEach
     void setup() throws IOException {
-        json = Files.readAsJson(Paths.get("json/courses.json"));
+        json = ResourcesUtils.readAsJson(Paths.get("json/courses.json"));
     }
 
     @Test
