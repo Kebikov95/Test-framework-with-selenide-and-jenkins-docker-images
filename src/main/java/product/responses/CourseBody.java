@@ -11,8 +11,8 @@ public class CourseBody {
 
     @Override
     public int hashCode() {
-        final int firstPrime = 29;
-        final int secondPrime = 19;
+        final int firstPrime = 61;
+        final int secondPrime = 73;
         return new HashCodeBuilder(firstPrime, secondPrime)
                 .append(course)
                 .toHashCode();

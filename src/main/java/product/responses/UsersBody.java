@@ -21,8 +21,8 @@ public class UsersBody {
 
     @Override
     public int hashCode() {
-        final int firstPrime = 23;
-        final int secondPrime = 17;
+        final int firstPrime = 83;
+        final int secondPrime = 97;
         return new HashCodeBuilder(firstPrime, secondPrime)
                 .append(page)
                 .append(per_page)

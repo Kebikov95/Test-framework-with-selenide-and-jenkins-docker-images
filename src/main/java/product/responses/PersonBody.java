@@ -15,8 +15,8 @@ public class PersonBody {
 
     @Override
     public int hashCode() {
-        final int firstPrime = 23;
-        final int secondPrime = 17;
+        final int firstPrime = 29;
+        final int secondPrime = 79;
         return new HashCodeBuilder(firstPrime, secondPrime)
                 .append(name)
                 .append(job)

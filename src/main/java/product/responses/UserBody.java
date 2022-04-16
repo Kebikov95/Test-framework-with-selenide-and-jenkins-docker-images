@@ -15,8 +15,8 @@ public class UserBody {
 
     @Override
     public int hashCode() {
-        final int firstPrime = 23;
-        final int secondPrime = 17;
+        final int firstPrime = 11;
+        final int secondPrime = 13;
         return new HashCodeBuilder(firstPrime, secondPrime)
                 .append(data)
                 .append(support)

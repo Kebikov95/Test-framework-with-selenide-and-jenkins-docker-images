@@ -6,17 +6,23 @@ import io.restassured.http.Header;
 import io.restassured.http.Headers;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
+import org.apache.logging.log4j.Logger;
 import org.json.simple.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+import static org.apache.logging.log4j.LogManager.getLogger;
+
 public class HttpClient {
+
     private static final String NOT_NULL_URL_MESSAGE = "Relative URL cannot be null.";
     private static final String NOT_NULL_QUERY_PARAMETERS_MESSAGE = "Query parameters cannot be null.";
     private static final String NOT_NULL_HEADERS_MESSAGE = "Request headers cannot be null.";
     private static final String NOT_NULL_REQUEST_BODY_MASSAGE = "Request body cannot be null";
+    private static final Logger log = getLogger(HttpClient.class);
+
     private final Map<String, String> defaultQueryParameters = new HashMap<>();
     private final Map<String, String> defaultHeaders = new HashMap<>();
 
@@ -108,10 +114,12 @@ public class HttpClient {
         try {
             body = response.body().as(JSONObject.class);
         } catch (IllegalStateException e) {
+            log.debug("The body has been empty.");
             body = new JSONObject();
         }
         int responseCode = response.getStatusCode();
         Map<String, String> headers = convertHeaders(response.headers());
+        log.debug("The response status code: {},\nThe response body: {}", responseCode, body);
         return new HttpResponse<>(responseCode, headers, body);
     }
 
@@ -120,6 +128,7 @@ public class HttpClient {
         for (Header header : headers) {
             headersMap.put(header.getName(), header.getValue());
         }
+        log.debug("The convert headers: {}", headersMap);
         return headersMap;
     }
 }
