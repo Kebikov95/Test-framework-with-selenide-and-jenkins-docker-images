@@ -1,6 +1,7 @@
 package product.microservices;
 
 import framework.client.HttpClient;
+import framework.configuration.UriManager;
 import framework.response.HttpResponse;
 import helpers.JsonRepresentation;
 import org.json.simple.JSONObject;
@@ -21,14 +22,14 @@ public class LoginAndRegistrationMicroservice extends BaseMicroservice {
     }
 
     public HttpResponse<JSONObject> register(UserPojo user) throws ParseException {
-        String uri = "api/register";
+        String uri = UriManager.getRegisterUri();
         JSONObject userBody = JsonRepresentation.convertToJson(user);
         HttpResponse<JSONObject> httpResponse = httpClient.post(uri, queryParams, headers, userBody);
         return new HttpResponse<>(httpResponse.getStatusCode(), httpResponse.getHeaders(), httpResponse.getBody());
     }
 
     public HttpResponse<JSONObject> login(UserPojo user) throws ParseException {
-        String uri = "api/login";
+        String uri = UriManager.getLoginUri();
         JSONObject userBody = JsonRepresentation.convertToJson(user);
         HttpResponse<JSONObject> httpResponse = httpClient.post(uri, queryParams, headers, userBody);
         return new HttpResponse<>(httpResponse.getStatusCode(), httpResponse.getHeaders(), httpResponse.getBody());

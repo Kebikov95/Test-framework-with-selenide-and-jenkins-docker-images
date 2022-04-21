@@ -1,6 +1,7 @@
 package product.microservices;
 
 import framework.client.HttpClient;
+import framework.configuration.UriManager;
 import framework.response.HttpResponse;
 import org.json.simple.JSONObject;
 import product.responses.UserBody;
@@ -16,7 +17,7 @@ public class UsersMicroservice extends BaseMicroservice {
     }
 
     public HttpResponse<UserBody> getUser(int id) {
-        String uri = format("api/users/%s", id);
+        String uri = format(UriManager.getUserUri(), id);
         return getUserResponse(uri);
     }
 
@@ -27,7 +28,7 @@ public class UsersMicroservice extends BaseMicroservice {
     }
 
     public HttpResponse<UsersBody> getUsersList(int page) {
-        String uri = format("api/users?page=%s", page);
+        String uri = format(UriManager.getUserPageUri(), page);
         HttpResponse<JSONObject> httpResponse = httpClient.get(uri);
         UsersBody usersBody = convertFromJson(httpResponse.getBody(), UsersBody.class);
         return new HttpResponse<>(httpResponse.getStatusCode(), httpResponse.getHeaders(), usersBody);

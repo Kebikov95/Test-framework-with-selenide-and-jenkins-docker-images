@@ -1,6 +1,7 @@
 package product.microservices;
 
 import framework.client.HttpClient;
+import framework.configuration.UriManager;
 import framework.response.HttpResponse;
 import org.json.simple.JSONObject;
 import product.responses.JsonResponseFormatBody;
@@ -14,7 +15,7 @@ public class ResponseFormatsMicroservice extends BaseMicroservice {
     }
 
     public HttpResponse<JsonResponseFormatBody> returnJson() {
-        String uri = "json";
+        String uri = UriManager.getJsonUri();
         HttpResponse<JSONObject> httpResponse = httpClient.get(uri);
         JsonResponseFormatBody jsonResponseFormatBody = convertFromJson(httpResponse.getBody(), JsonResponseFormatBody.class);
         return new HttpResponse<>(httpResponse.getStatusCode(), httpResponse.getHeaders(),

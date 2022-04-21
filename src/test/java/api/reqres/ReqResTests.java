@@ -15,7 +15,6 @@ import product.responses.PersonBody;
 import product.responses.UserBody;
 import product.responses.UsersBody;
 
-import java.io.IOException;
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -63,7 +62,7 @@ class ReqResTests extends BaseTest {
 
     @Test
     @Description("check POST method for creating person")
-    void checkPostMethod() throws ParseException, IOException {
+    void checkPostMethod() throws ParseException {
         MethodsMicroservice methods = new MethodsMicroservice(httpClient);
         HttpResponse<PersonBody> personBodyHttpResponse = methods.post();
         log.info(personBodyHttpResponse.getBody());
@@ -74,7 +73,7 @@ class ReqResTests extends BaseTest {
 
     @Test
     @Description("check PUT method for creating person")
-    void checkPutMethod() throws ParseException, IOException {
+    void checkPutMethod() throws ParseException {
         MethodsMicroservice methods = new MethodsMicroservice(httpClient);
         HttpResponse<JSONObject> response = methods.put();
         JSONObject body = response.getBody();

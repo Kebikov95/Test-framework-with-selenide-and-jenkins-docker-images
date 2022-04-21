@@ -1,6 +1,7 @@
 package product.microservices;
 
 import framework.client.HttpClient;
+import framework.configuration.UriManager;
 import framework.response.HttpResponse;
 import helpers.JsonRepresentation;
 import org.json.simple.JSONObject;
@@ -21,7 +22,7 @@ public class MethodsMicroservice extends BaseMicroservice {
     }
 
     public HttpResponse<PersonBody> post() throws ParseException {
-        String uri = "api/users";
+        String uri = UriManager.getUsersUri();
         Map<String, String> queryParams = new HashMap<>();
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "application/json");
@@ -33,7 +34,7 @@ public class MethodsMicroservice extends BaseMicroservice {
     }
 
     public HttpResponse<JSONObject> put() throws ParseException {
-        String uri = "api/users";
+        String uri = UriManager.getUsersUri();
         PersonPojo person = new PersonPojo("morpheus", "leader");
         JSONObject personJson = JsonRepresentation.convertToJson(person);
         HttpResponse<JSONObject> httpResponse = httpClient.put(uri, personJson);
@@ -42,7 +43,7 @@ public class MethodsMicroservice extends BaseMicroservice {
     }
 
     public HttpResponse<JSONObject> delete(int id) {
-        String uri = format("api/users/%s", id);
+        String uri = format(UriManager.getUserUri(), id);
         HttpResponse<JSONObject> httpResponse = httpClient.delete(uri);
         return new HttpResponse<>(httpResponse.getStatusCode(), httpResponse.getHeaders(), httpResponse.getBody());
     }
