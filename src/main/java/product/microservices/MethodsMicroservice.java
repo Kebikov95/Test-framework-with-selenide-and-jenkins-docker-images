@@ -2,17 +2,17 @@ package product.microservices;
 
 import framework.client.HttpClient;
 import framework.response.HttpResponse;
-import helpers.ResourcesUtils;
+import helpers.JsonRepresentation;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
+import product.bo.pojo.PersonPojo;
 import product.responses.PersonBody;
 
-import java.io.IOException;
-import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 
 import static helpers.JsonRepresentation.convertFromJson;
+import static java.lang.String.format;
 
 public class MethodsMicroservice extends BaseMicroservice {
 
@@ -20,27 +20,29 @@ public class MethodsMicroservice extends BaseMicroservice {
         super(httpClient);
     }
 
-    public HttpResponse<PersonBody> post() throws ParseException, IOException {
+    public HttpResponse<PersonBody> post() throws ParseException {
         String uri = "api/users";
         Map<String, String> queryParams = new HashMap<>();
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "application/json");
-        JSONObject morpheusJson = ResourcesUtils.readAsJSONObject(Path.of("json/person.json"));
-        HttpResponse<JSONObject> httpResponse = httpClient.post(uri, queryParams, headers, morpheusJson);
+        PersonPojo person = new PersonPojo("morpheus", "leader");
+        JSONObject personJson = JsonRepresentation.convertToJson(person);
+        HttpResponse<JSONObject> httpResponse = httpClient.post(uri, queryParams, headers, personJson);
         PersonBody morpheusBody = convertFromJson(httpResponse.getBody(), PersonBody.class);
         return new HttpResponse<>(httpResponse.getStatusCode(), httpResponse.getHeaders(), morpheusBody);
     }
 
-    public HttpResponse<JSONObject> put() throws ParseException, IOException {
+    public HttpResponse<JSONObject> put() throws ParseException {
         String uri = "api/users";
-        JSONObject morpheusJson = ResourcesUtils.readAsJSONObject(Path.of("json/person.json"));
-        HttpResponse<JSONObject> httpResponse = httpClient.put(uri, morpheusJson);
+        PersonPojo person = new PersonPojo("morpheus", "leader");
+        JSONObject personJson = JsonRepresentation.convertToJson(person);
+        HttpResponse<JSONObject> httpResponse = httpClient.put(uri, personJson);
         JSONObject morpheusBody = convertFromJson(httpResponse.getBody(), JSONObject.class);
         return new HttpResponse<>(httpResponse.getStatusCode(), httpResponse.getHeaders(), morpheusBody);
     }
 
-    public HttpResponse<JSONObject> delete() {
-        String uri = "api/users/2";
+    public HttpResponse<JSONObject> delete(int id) {
+        String uri = format("api/users/%s", id);
         HttpResponse<JSONObject> httpResponse = httpClient.delete(uri);
         return new HttpResponse<>(httpResponse.getStatusCode(), httpResponse.getHeaders(), httpResponse.getBody());
     }

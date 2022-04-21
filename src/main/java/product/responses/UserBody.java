@@ -4,13 +4,13 @@ import helpers.JsonRepresentation;
 import lombok.Getter;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import product.bo.pojo.DataPojo;
+import product.bo.pojo.UserPojo;
 import product.bo.pojo.SupportPojo;
 
 @Getter
 public class UserBody {
 
-    private DataPojo data;
+    private UserPojo data;
     private SupportPojo support;
 
     @Override

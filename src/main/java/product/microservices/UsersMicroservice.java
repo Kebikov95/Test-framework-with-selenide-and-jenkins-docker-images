@@ -7,6 +7,7 @@ import product.responses.UserBody;
 import product.responses.UsersBody;
 
 import static helpers.JsonRepresentation.convertFromJson;
+import static java.lang.String.format;
 
 public class UsersMicroservice extends BaseMicroservice {
 
@@ -14,13 +15,8 @@ public class UsersMicroservice extends BaseMicroservice {
         super(httpClient);
     }
 
-    public HttpResponse<UserBody> getUser() {
-        String uri = "api/users/2";
-        return getUserResponse(uri);
-    }
-
-    public HttpResponse<UserBody> getNotFoundUser() {
-        String uri = "api/users/23";
+    public HttpResponse<UserBody> getUser(int id) {
+        String uri = format("api/users/%s", id);
         return getUserResponse(uri);
     }
 
@@ -30,8 +26,8 @@ public class UsersMicroservice extends BaseMicroservice {
         return new HttpResponse<>(httpResponse.getStatusCode(), httpResponse.getHeaders(), userBody);
     }
 
-    public HttpResponse<UsersBody> getUsersList() {
-        String uri = "api/users?page=2";
+    public HttpResponse<UsersBody> getUsersList(int page) {
+        String uri = format("api/users?page=%s", page);
         HttpResponse<JSONObject> httpResponse = httpClient.get(uri);
         UsersBody usersBody = convertFromJson(httpResponse.getBody(), UsersBody.class);
         return new HttpResponse<>(httpResponse.getStatusCode(), httpResponse.getHeaders(), usersBody);

@@ -4,7 +4,7 @@ import helpers.JsonRepresentation;
 import lombok.Getter;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import product.bo.pojo.DataPojo;
+import product.bo.pojo.UserPojo;
 import product.bo.pojo.SupportPojo;
 
 import java.util.List;
@@ -16,7 +16,7 @@ public class UsersBody {
     private int per_page;
     private int total;
     private int total_pages;
-    private List<DataPojo> data;
+    private List<UserPojo> data;
     private SupportPojo support;
 
     @Override

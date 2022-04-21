@@ -2,12 +2,12 @@ package api.reqres;
 
 import framework.enums.HttpStatusCode;
 import framework.response.HttpResponse;
-import helpers.ResourcesUtils;
 import jdk.jfr.Description;
 import org.assertj.core.util.Strings;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 import org.junit.jupiter.api.Test;
+import product.bo.pojo.UserPojo;
 import product.microservices.MethodsMicroservice;
 import product.microservices.LoginAndRegistrationMicroservice;
 import product.microservices.UsersMicroservice;
@@ -16,7 +16,6 @@ import product.responses.UserBody;
 import product.responses.UsersBody;
 
 import java.io.IOException;
-import java.nio.file.Path;
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -27,7 +26,7 @@ class ReqResTests extends BaseTest {
     @Description("check GET method for getting user list")
     void checkGetUserList() {
         UsersMicroservice userList = new UsersMicroservice(httpClient);
-        HttpResponse<UsersBody> usersBodyHttpResponse = userList.getUsersList();
+        HttpResponse<UsersBody> usersBodyHttpResponse = userList.getUsersList(2);
         assertEquals(HttpStatusCode.OK.getValue(), usersBodyHttpResponse.getStatusCode());
         int expectedDataSize = 6;
         int actualDataSize = usersBodyHttpResponse
@@ -42,7 +41,7 @@ class ReqResTests extends BaseTest {
     @Description("check GET method for getting single user")
     void checkGetSingleUser() {
         UsersMicroservice userList = new UsersMicroservice(httpClient);
-        HttpResponse<UserBody> userBodyHttpResponse = userList.getUser();
+        HttpResponse<UserBody> userBodyHttpResponse = userList.getUser(2);
         assertEquals(HttpStatusCode.OK.getValue(), userBodyHttpResponse.getStatusCode());
         String expectedAvatarLink = "https://reqres.in/img/faces/2-image.jpg";
         String actualAvatarLink = userBodyHttpResponse
@@ -57,7 +56,7 @@ class ReqResTests extends BaseTest {
     @Description("check GET method for verify not found user")
     void checkNotFoundUser() {
         UsersMicroservice userList = new UsersMicroservice(httpClient);
-        HttpResponse<UserBody> userBodyHttpResponse = userList.getNotFoundUser();
+        HttpResponse<UserBody> userBodyHttpResponse = userList.getUser(23);
         assertEquals(HttpStatusCode.NOT_FOUND.getValue(), userBodyHttpResponse.getStatusCode());
         log.info("Status code for not found user: {}", userBodyHttpResponse.getStatusCode());
     }
@@ -90,17 +89,20 @@ class ReqResTests extends BaseTest {
     @Description("check DELETE method for creating person")
     void checkPatchMethod() {
         MethodsMicroservice methods = new MethodsMicroservice(httpClient);
-        HttpResponse<JSONObject> response = methods.delete();
+        HttpResponse<JSONObject> response = methods.delete(2);
         log.info("Status code: {}", response.getStatusCode());
         assertEquals(HttpStatusCode.NO_CONTENT.getValue(), response.getStatusCode());
     }
 
     @Test
     @Description("check successful registration")
-    void checkSuccessfulRegistration() throws IOException, ParseException {
+    void checkSuccessfulRegistration() throws ParseException {
         LoginAndRegistrationMicroservice registration = new LoginAndRegistrationMicroservice(httpClient);
-        JSONObject validUserJson = ResourcesUtils.readAsJSONObject(Path.of("json/validUser.json"));
-        HttpResponse<JSONObject> response = registration.register(validUserJson);
+        UserPojo user = UserPojo.builder()
+                .email("eve.holt@reqres.in")
+                .password("cityslicka")
+                .build();
+        HttpResponse<JSONObject> response = registration.register(user);
         String token = response.getBody().get("token").toString();
         log.info("Status code: {}", response.getStatusCode());
         log.info("Token: {}", token);
@@ -110,10 +112,13 @@ class ReqResTests extends BaseTest {
 
     @Test
     @Description("check unsuccessful registration")
-    void checkUnsuccessfulRegistration() throws IOException, ParseException {
+    void checkUnsuccessfulRegistration() throws ParseException {
         LoginAndRegistrationMicroservice registration = new LoginAndRegistrationMicroservice(httpClient);
-        JSONObject validUserJson = ResourcesUtils.readAsJSONObject(Path.of("json/unvalidUser.json"));
-        HttpResponse<JSONObject> response = registration.register(validUserJson);
+        UserPojo user = UserPojo.builder()
+                .email("eve.holt@reqres.in")
+                .password("")
+                .build();
+        HttpResponse<JSONObject> response = registration.register(user);
         String errorMessage = response.getBody().get("error").toString();
         log.info("Status code: {}", response.getStatusCode());
         log.info("Error message: {}", response.getBody());
@@ -123,10 +128,13 @@ class ReqResTests extends BaseTest {
 
     @Test
     @Description("check successful login")
-    void checkSuccessfulLogin() throws IOException, ParseException {
+    void checkSuccessfulLogin() throws ParseException {
         LoginAndRegistrationMicroservice login = new LoginAndRegistrationMicroservice(httpClient);
-        JSONObject validUserJson = ResourcesUtils.readAsJSONObject(Path.of("json/validUser.json"));
-        HttpResponse<JSONObject> response = login.login(validUserJson);
+        UserPojo user = UserPojo.builder()
+                .email("eve.holt@reqres.in")
+                .password("cityslicka")
+                .build();
+        HttpResponse<JSONObject> response = login.login(user);
         String token = response.getBody().get("token").toString();
         log.info("Status code: {}", response.getStatusCode());
         log.info("Token: {}", token);
@@ -136,10 +144,13 @@ class ReqResTests extends BaseTest {
 
     @Test
     @Description("check unsuccessful login")
-    void checkUnsuccessfulLogin() throws IOException, ParseException {
+    void checkUnsuccessfulLogin() throws ParseException {
         LoginAndRegistrationMicroservice registration = new LoginAndRegistrationMicroservice(httpClient);
-        JSONObject validUserJson = ResourcesUtils.readAsJSONObject(Path.of("json/unvalidUser.json"));
-        HttpResponse<JSONObject> response = registration.login(validUserJson);
+        UserPojo user = UserPojo.builder()
+                .email("eve.holt@reqres.in")
+                .password("")
+                .build();
+        HttpResponse<JSONObject> response = registration.login(user);
         String errorMessage = response.getBody().get("error").toString();
         log.info("Status code: {}", response.getStatusCode());
         log.info("Error message: {}", response.getBody());
