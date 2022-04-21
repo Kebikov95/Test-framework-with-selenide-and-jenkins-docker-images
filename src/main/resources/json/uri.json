@@ -1,0 +1,12 @@
+{
+  "reqres": {
+    "uri": {
+      "json": "json",
+      "login": "api/login",
+      "register": "api/register",
+      "user": "api/users/%s",
+      "userPage": "api/users?page=%s",
+      "users": "api/users"
+    }
+  }
+}
