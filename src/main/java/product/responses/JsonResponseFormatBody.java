@@ -31,7 +31,6 @@ public class JsonResponseFormatBody {
         }
         JsonResponseFormatBody other = (JsonResponseFormatBody) obj;
         return new EqualsBuilder()
-                .appendSuper(super.equals(obj))
                 .append(slideshow, other.slideshow)
                 .isEquals();
     }

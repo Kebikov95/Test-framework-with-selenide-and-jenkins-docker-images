@@ -46,7 +46,6 @@ public class UsersBody {
         }
         UsersBody other = (UsersBody) obj;
         return new EqualsBuilder()
-                .appendSuper(super.equals(obj))
                 .append(page, other.page)
                 .append(per_page, other.per_page)
                 .append(total, other.total)
