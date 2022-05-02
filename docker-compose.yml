@@ -30,3 +30,18 @@ services:
     ports:
       - "8080:8080"
     command: ["--selenoid-uri", "http://selenoid:4444"]
+
+  mysql-db:
+    image: mysql:latest
+    hostname: mysql-db
+    container_name: mysql_db
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'project_db'
+      MYSQL_USER: 'root'
+      MYSQL_PASSWORD: '09031995'
+      MYSQL_ROOT_PASSWORD: 'password'
+    ports:
+      - '6033:3306'
+    volumes:
+      - my-db-volume:/var/lib/mysql
