@@ -1,4 +1,4 @@
-package framework.configuration;
+package api.configuration;
 
 import com.jayway.jsonpath.Configuration;
 import com.jayway.jsonpath.JsonPath;

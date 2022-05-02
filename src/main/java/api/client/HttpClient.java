@@ -1,6 +1,6 @@
-package framework.client;
+package api.client;
 
-import framework.response.HttpResponse;
+import api.response.HttpResponse;
 import io.restassured.RestAssured;
 import io.restassured.http.Header;
 import io.restassured.http.Headers;

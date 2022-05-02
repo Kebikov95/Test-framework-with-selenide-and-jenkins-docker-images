@@ -1,4 +1,4 @@
-package framework.response;
+package api.response;
 
 import helpers.JsonRepresentation;
 import org.apache.commons.lang3.builder.EqualsBuilder;

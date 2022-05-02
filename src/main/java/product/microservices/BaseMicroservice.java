@@ -1,6 +1,6 @@
 package product.microservices;
 
-import framework.client.HttpClient;
+import api.client.HttpClient;
 import org.apache.logging.log4j.Logger;
 
 import java.util.Objects;
