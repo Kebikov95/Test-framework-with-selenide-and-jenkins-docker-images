@@ -1,6 +1,6 @@
 package db;
 
-import database.Executor;
+import database.executors.Executor;
 import database.dao.implementations.UserDaoImplementation;
 import database.entities.User;
 import database.exceptions.DaoException;
