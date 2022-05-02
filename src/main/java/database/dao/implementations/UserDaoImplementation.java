@@ -12,6 +12,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static database.enums.UsersTableFields.*;
+
 public class UserDaoImplementation implements UserDao {
 
     @Override
@@ -43,10 +45,10 @@ public class UserDaoImplementation implements UserDao {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 User user = User.builder()
-                        .id(resultSet.getInt("Id"))
-                        .userName(resultSet.getString("UserName"))
-                        .password(resultSet.getString("Password"))
-                        .email(resultSet.getString("Email"))
+                        .id(resultSet.getInt(ID.getFieldName()))
+                        .userName(resultSet.getString(USER_NAME.getFieldName()))
+                        .password(resultSet.getString(PASSWORD.getFieldName()))
+                        .email(resultSet.getString(EMAIL.getFieldName()))
                         .build();
                 users.add(user);
             }
@@ -66,10 +68,10 @@ public class UserDaoImplementation implements UserDao {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 user = User.builder()
-                        .id(resultSet.getInt("Id"))
-                        .userName(resultSet.getString("UserName"))
-                        .password(resultSet.getString("Password"))
-                        .email(resultSet.getString("Email"))
+                        .id(resultSet.getInt(ID.getFieldName()))
+                        .userName(resultSet.getString(USER_NAME.getFieldName()))
+                        .password(resultSet.getString(PASSWORD.getFieldName()))
+                        .email(resultSet.getString(EMAIL.getFieldName()))
                         .build();
             }
         } catch (SQLException e) {
@@ -88,10 +90,10 @@ public class UserDaoImplementation implements UserDao {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 user = User.builder()
-                        .id(resultSet.getInt("Id"))
-                        .userName(resultSet.getString("UserName"))
-                        .password(resultSet.getString("Password"))
-                        .email(resultSet.getString("Email"))
+                        .id(resultSet.getInt(ID.getFieldName()))
+                        .userName(resultSet.getString(USER_NAME.getFieldName()))
+                        .password(resultSet.getString(PASSWORD.getFieldName()))
+                        .email(resultSet.getString(EMAIL.getFieldName()))
                         .build();
             }
         } catch (SQLException e) {
