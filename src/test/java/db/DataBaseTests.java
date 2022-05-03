@@ -1,7 +1,7 @@
 package db;
 
 import database.executors.Executor;
-import database.dao.implementations.UserDaoImplementation;
+import database.dao.implementations.users.UsersDaoImplementation;
 import database.entities.User;
 import database.exceptions.DaoException;
 import database.queries.Queries;
@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class DataBaseTests {
 
     private static final Logger log = getLogger(DataBaseTests.class);
-    private static final UserDaoImplementation USER_DAO_IMPL = new UserDaoImplementation();
+    private static final UsersDaoImplementation USER_DAO_IMPL = new UsersDaoImplementation();
 
     @BeforeAll
     static void createDb() {

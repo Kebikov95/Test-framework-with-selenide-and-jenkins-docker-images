@@ -1,4 +1,4 @@
-package database.dao.implementations;
+package database.dao.implementations.users;
 
 import database.connection.ConnectionCreator;
 import database.entities.User;
@@ -14,7 +14,7 @@ import java.util.List;
 
 import static database.enums.UsersTableFields.*;
 
-public class UserDaoImplementation implements UserDao {
+public class UsersDaoImplementation implements UsersDao {
 
     @Override
     public boolean create(User user) throws DaoException {

@@ -1,10 +1,10 @@
-package database.dao.implementations;
+package database.dao.implementations.users;
 
 import database.dao.BaseDao;
 import database.entities.User;
 import database.exceptions.DaoException;
 
-public interface UserDao extends BaseDao<Long, User> {
+public interface UsersDao extends BaseDao<Long, User> {
 
     User findUserByUserName(String patternName) throws DaoException;
 }

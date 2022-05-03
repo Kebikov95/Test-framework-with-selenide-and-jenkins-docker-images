@@ -1,6 +1,6 @@
 package database.logic;
 
-import database.dao.implementations.UserDaoImplementation;
+import database.dao.implementations.users.UsersDaoImplementation;
 import database.entities.User;
 import database.exceptions.DaoException;
 import org.apache.logging.log4j.Logger;
@@ -13,7 +13,7 @@ import static org.apache.logging.log4j.LogManager.getLogger;
 public class LogicDb {
 
     private static final Logger log = getLogger(LogicDb.class);
-    private static final UserDaoImplementation USER_DAO_IMPL = new UserDaoImplementation();
+    private static final UsersDaoImplementation USER_DAO_IMPL = new UsersDaoImplementation();
 
     public String login() throws DaoException {
         Scanner sc = new Scanner(System.in);
