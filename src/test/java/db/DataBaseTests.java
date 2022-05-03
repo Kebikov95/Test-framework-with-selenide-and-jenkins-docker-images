@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.apache.logging.log4j.LogManager.getLogger;
 import static org.junit.jupiter.api.Assertions.*;
@@ -40,7 +41,6 @@ class DataBaseTests {
     @Test
     void addUser() throws DaoException {
         User user = User.builder()
-                .id(22)
                 .userName("Mercy2321")
                 .password("23212321")
                 .email("merc23@yahoo.com")
@@ -55,11 +55,15 @@ class DataBaseTests {
     @Test
     void addUsers() throws DaoException {
         List<User> users = List.of(
-                new User(10, "Alex97", "aLex", "alex@mail.com"),
-                new User(11, "GK_2002", "qwerty", "gk@mail.com")
+                new User("Alex97", "aLex", "alex@mail.com"),
+                new User("GK_2002", "qwerty", "gk@mail.com")
         );
         USER_DAO_IMPL.create(users);
         List<User> dbUsers = USER_DAO_IMPL.findAll();
+
+        users = users.stream()
+                .peek(u -> u.setPassword(String.valueOf(u.getPassword().hashCode())))
+                .collect(Collectors.toList());
         boolean isContains = dbUsers.containsAll(users);
         assertTrue(isContains);
         log.info("The users has been added: [{}]", users);
@@ -93,13 +97,13 @@ class DataBaseTests {
 
     // UPDATE
     @Test
-    void updateFirstUser() throws DaoException {
-        long firstUserId = 2;
-        User userBeforeUpdate = USER_DAO_IMPL.findEntityById(firstUserId);
+    void updateSecondUser() throws DaoException {
+        long secondUserId = 2;
+        User userBeforeUpdate = USER_DAO_IMPL.findEntityById(secondUserId);
         log.info("The user before updating: [{}]", userBeforeUpdate);
         userBeforeUpdate.setUserName("Android_101");
         USER_DAO_IMPL.update(userBeforeUpdate);
-        User userAfterUpdate = USER_DAO_IMPL.findEntityById(firstUserId);
+        User userAfterUpdate = USER_DAO_IMPL.findEntityById(secondUserId);
         assertEquals(userBeforeUpdate, userAfterUpdate);
         log.info("The user after updating: [{}]", userAfterUpdate);
     }
