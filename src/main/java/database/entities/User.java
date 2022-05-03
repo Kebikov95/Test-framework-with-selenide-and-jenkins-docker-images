@@ -17,12 +17,17 @@ public class User extends Entity {
     private String password;
     private String email;
 
+    public User(String userName, String password, String email) {
+        this.userName = userName;
+        this.password = password;
+        this.email = email;
+    }
+
     @Override
     public int hashCode() {
         final int firstPrime = 37;
         final int secondPrime = 83;
         return new HashCodeBuilder(firstPrime, secondPrime)
-                .append(id)
                 .append(userName)
                 .append(password)
                 .append(email)
@@ -42,7 +47,6 @@ public class User extends Entity {
         }
         User other = (User) obj;
         return new EqualsBuilder()
-                .append(id, other.id)
                 .append(userName, other.userName)
                 .append(password, other.password)
                 .append(email, other.email)
