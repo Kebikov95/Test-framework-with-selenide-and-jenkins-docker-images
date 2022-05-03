@@ -20,10 +20,9 @@ public class UserDaoImplementation implements UserDao {
     public boolean create(User user) throws DaoException {
         try (Connection connection = ConnectionCreator.createConnection();
              PreparedStatement statement = connection.prepareStatement(UserQueries.INSERT_USER)) {
-            statement.setLong(1, user.getId());
-            statement.setString(2, user.getUserName());
-            statement.setString(3, user.getPassword());
-            statement.setString(4, user.getEmail());
+            statement.setString(1, user.getUserName());
+            statement.setString(2, String.valueOf(user.getPassword().hashCode()));
+            statement.setString(3, user.getEmail());
             return !statement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -33,8 +32,9 @@ public class UserDaoImplementation implements UserDao {
 
     @Override
     public void create(List<User> users) throws DaoException {
-        for (User user : users)
+        for (User user : users) {
             this.create(user);
+        }
     }
 
     @Override
