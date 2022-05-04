@@ -1,9 +1,9 @@
 package database.dao.implementations.users;
 
-import database.connection.ConnectionCreator;
+import database.connection.UsersDbConnectionCreator;
 import database.entities.User;
 import database.exceptions.DaoException;
-import database.queries.UserQueries;
+import database.queries.users.UsersQueries;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -18,8 +18,8 @@ public class UsersDaoImplementation implements UsersDao {
 
     @Override
     public boolean create(User user) throws DaoException {
-        try (Connection connection = ConnectionCreator.createConnection();
-             PreparedStatement statement = connection.prepareStatement(UserQueries.INSERT_USER)) {
+        try (Connection connection = UsersDbConnectionCreator.createConnection();
+             PreparedStatement statement = connection.prepareStatement(UsersQueries.INSERT_USER)) {
             statement.setString(1, user.getUserName());
             statement.setString(2, String.valueOf(user.getPassword().hashCode()));
             statement.setString(3, user.getEmail());
@@ -40,8 +40,8 @@ public class UsersDaoImplementation implements UsersDao {
     @Override
     public List<User> findAll() throws DaoException {
         List<User> users = new ArrayList<>();
-        try (Connection connection = ConnectionCreator.createConnection();
-             PreparedStatement statement = connection.prepareStatement(UserQueries.SELECT_USERS)) {
+        try (Connection connection = UsersDbConnectionCreator.createConnection();
+             PreparedStatement statement = connection.prepareStatement(UsersQueries.SELECT_USERS)) {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 User user = User.builder()
@@ -62,8 +62,8 @@ public class UsersDaoImplementation implements UsersDao {
     @Override
     public User findEntityById(Long id) throws DaoException {
         User user = null;
-        try (Connection connection = ConnectionCreator.createConnection();
-             PreparedStatement statement = connection.prepareStatement(UserQueries.SELECT_USER_BY_ID)) {
+        try (Connection connection = UsersDbConnectionCreator.createConnection();
+             PreparedStatement statement = connection.prepareStatement(UsersQueries.SELECT_USER_BY_ID)) {
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -84,8 +84,8 @@ public class UsersDaoImplementation implements UsersDao {
     @Override
     public User findUserByUserName(String patternName) throws DaoException {
         User user = null;
-        try (Connection connection = ConnectionCreator.createConnection();
-             PreparedStatement statement = connection.prepareStatement(UserQueries.SELECT_USER_BY_USER_NAME)) {
+        try (Connection connection = UsersDbConnectionCreator.createConnection();
+             PreparedStatement statement = connection.prepareStatement(UsersQueries.SELECT_USER_BY_USER_NAME)) {
             statement.setString(1, patternName);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -110,8 +110,8 @@ public class UsersDaoImplementation implements UsersDao {
 
     @Override
     public boolean delete(Long id) throws DaoException {
-        try (Connection connection = ConnectionCreator.createConnection();
-             PreparedStatement statement = connection.prepareStatement(UserQueries.DELETE_USER_BY_ID)) {
+        try (Connection connection = UsersDbConnectionCreator.createConnection();
+             PreparedStatement statement = connection.prepareStatement(UsersQueries.DELETE_USER_BY_ID)) {
             statement.setString(1, id.toString());
             int result = statement.executeUpdate();
             return result > 0;
@@ -123,8 +123,8 @@ public class UsersDaoImplementation implements UsersDao {
 
     @Override
     public User update(User user) throws DaoException {
-        try (Connection connection = ConnectionCreator.createConnection();
-             PreparedStatement statement = connection.prepareStatement(UserQueries.UPDATE_USER_BY_ID)) {
+        try (Connection connection = UsersDbConnectionCreator.createConnection();
+             PreparedStatement statement = connection.prepareStatement(UsersQueries.UPDATE_USER_BY_ID)) {
             statement.setString(1, user.getUserName());
             statement.setString(2, user.getPassword());
             statement.setString(3, user.getEmail());

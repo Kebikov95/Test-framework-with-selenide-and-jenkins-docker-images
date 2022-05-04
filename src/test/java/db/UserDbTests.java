@@ -4,7 +4,7 @@ import database.executors.Executor;
 import database.dao.implementations.users.UsersDaoImplementation;
 import database.entities.User;
 import database.exceptions.DaoException;
-import database.queries.Queries;
+import database.queries.users.UsersQueries;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -17,23 +17,23 @@ import java.util.stream.Collectors;
 import static org.apache.logging.log4j.LogManager.getLogger;
 import static org.junit.jupiter.api.Assertions.*;
 
-class DataBaseTests {
+class UserDbTests {
 
-    private static final Logger log = getLogger(DataBaseTests.class);
+    private static final Logger log = getLogger(UserDbTests.class);
     private static final UsersDaoImplementation USER_DAO_IMPL = new UsersDaoImplementation();
 
     @BeforeAll
     static void createDb() {
         List<String> queries = new ArrayList<>();
-        queries.add(Queries.CREATE_USERS_TABLE);
-        queries.add(Queries.INSERT_USERS);
+        queries.add(UsersQueries.CREATE_USERS_TABLE);
+        queries.add(UsersQueries.INSERT_USERS_DATA);
         Executor.executeBatch(queries);
     }
 
     @AfterAll
     static void deleteDb() {
         List<String> queries = new ArrayList<>();
-        queries.add(Queries.DELETE_USERS_TABLE);
+        queries.add(UsersQueries.DELETE_USERS_TABLE);
         Executor.executeBatch(queries);
     }
 

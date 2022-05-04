@@ -10,9 +10,9 @@ import java.util.Scanner;
 
 import static org.apache.logging.log4j.LogManager.getLogger;
 
-public class LogicDb {
+public class UsersDbLogic {
 
-    private static final Logger log = getLogger(LogicDb.class);
+    private static final Logger log = getLogger(UsersDbLogic.class);
     private static final UsersDaoImplementation USER_DAO_IMPL = new UsersDaoImplementation();
 
     public String login() throws DaoException {
@@ -44,9 +44,9 @@ public class LogicDb {
     private boolean checkDbContainsUser(String userName, String password) throws DaoException {
         String message = getMessageByUserNameAndPassword(userName, password);
         switch (message) {
-            case "LogicDb successful":
+            case "UsersDbLogic successful":
                 return true;
-            case "LogicDb failed":
+            case "UsersDbLogic failed":
             case "User not found":
                 return false;
             default: throw new IllegalArgumentException("The message has been unexpected.");
@@ -58,9 +58,9 @@ public class LogicDb {
         User user = USER_DAO_IMPL.findUserByUserName(userName);
         if (Objects.nonNull(user)) {
             if (password.equals(user.getPassword())) {
-                message = "LogicDb successful";
+                message = "UsersDbLogic successful";
             } else {
-                message = "LogicDb failed";
+                message = "UsersDbLogic failed";
             }
         } else {
             message = "User not found";

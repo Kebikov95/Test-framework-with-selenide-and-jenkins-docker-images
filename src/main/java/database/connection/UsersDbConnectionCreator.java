@@ -7,11 +7,11 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-public class ConnectionCreator {
+public class UsersDbConnectionCreator {
 
     private static final Properties PROPERTIES = new Properties();
     private static final String DATABASE_URL;
-    private static final String PROPERTIES_DB_PATH = "src/main/resources/database.properties";
+    private static final String PROPERTIES_DB_PATH = "src/main/resources/usersDb.properties";
 
     static {
         try {
@@ -22,7 +22,7 @@ public class ConnectionCreator {
         DATABASE_URL = (String) PROPERTIES.get("db.url");
     }
 
-    private ConnectionCreator() {
+    private UsersDbConnectionCreator() {
     }
 
     public static Connection createConnection() throws SQLException {

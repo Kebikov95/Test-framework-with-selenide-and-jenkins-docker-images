@@ -1,6 +1,6 @@
 package database.executors;
 
-import database.connection.ConnectionCreator;
+import database.connection.UsersDbConnectionCreator;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -13,7 +13,7 @@ public class Executor {
     }
 
     public static void executeBatch(List<String> queries) {
-        try (Connection connection = ConnectionCreator.createConnection();
+        try (Connection connection = UsersDbConnectionCreator.createConnection();
              Statement statement = connection.createStatement()) {
             for (String query : queries) {
                 statement.addBatch(query);
