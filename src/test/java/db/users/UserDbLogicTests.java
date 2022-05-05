@@ -1,4 +1,4 @@
-package db;
+package db.users;
 
 import database.exceptions.DaoException;
 import database.executors.Executor;

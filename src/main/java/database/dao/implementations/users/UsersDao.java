@@ -1,7 +1,7 @@
 package database.dao.implementations.users;
 
 import database.dao.BaseDao;
-import database.entities.User;
+import database.entities.users.User;
 import database.exceptions.DaoException;
 
 public interface UsersDao extends BaseDao<Long, User> {

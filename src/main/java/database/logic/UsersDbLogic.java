@@ -1,7 +1,7 @@
 package database.logic;
 
 import database.dao.implementations.users.UsersDaoImplementation;
-import database.entities.User;
+import database.entities.users.User;
 import database.exceptions.DaoException;
 import org.apache.logging.log4j.Logger;
 

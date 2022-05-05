@@ -1,5 +1,6 @@
-package database.entities;
+package database.entities.project;
 
+import database.entities.Entity;
 import helpers.JsonRepresentation;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,14 +15,14 @@ public class Order extends Entity {
 
     private long id;
     private long productId;
-    private long orderId;
+    private long customerId;
     private String createdAt;
     private int productCount;
     private int price;
 
     public Order(long productId, long orderId, String createdAt, int productCount, int price) {
         this.productId = productId;
-        this.orderId = orderId;
+        this.customerId = orderId;
         this.createdAt = createdAt;
         this.productCount = productCount;
         this.price = price;
@@ -33,7 +34,7 @@ public class Order extends Entity {
         final int secondPrime = 73;
         return new HashCodeBuilder(firstPrime, secondPrime)
                 .append(productId)
-                .append(orderId)
+                .append(customerId)
                 .append(createdAt)
                 .append(productCount)
                 .append(price)
@@ -54,7 +55,7 @@ public class Order extends Entity {
         Order other = (Order) obj;
         return new EqualsBuilder()
                 .append(productId, other.productId)
-                .append(orderId, other.orderId)
+                .append(customerId, other.customerId)
                 .append(createdAt, other.createdAt)
                 .append(productCount, other.productCount)
                 .append(price, other.price)

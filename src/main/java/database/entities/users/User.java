@@ -1,5 +1,6 @@
-package database.entities;
+package database.entities.users;
 
+import database.entities.Entity;
 import helpers.JsonRepresentation;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

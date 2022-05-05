@@ -1,8 +1,8 @@
 package database.dao.implementations.project;
 
 import database.connection.ProjectDbConnectionCreator;
-import database.entities.Customer;
-import database.enums.UsersTableFields;
+import database.entities.project.Customer;
+import database.enums.users.UsersTableFields;
 import database.exceptions.DaoException;
 import database.queries.project.CustomersQueries;
 
@@ -13,8 +13,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static database.enums.CustomersTableFields.FIRST_NAME;
-import static database.enums.CustomersTableFields.ID;
+import static database.enums.project.CustomersTableFields.FIRST_NAME;
+import static database.enums.project.CustomersTableFields.ID;
 
 public class CustomersDaoImplementations implements CustomersDao {
 

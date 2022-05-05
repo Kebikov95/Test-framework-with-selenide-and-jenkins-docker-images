@@ -1,7 +1,7 @@
 package database.dao.implementations.users;
 
 import database.connection.UsersDbConnectionCreator;
-import database.entities.User;
+import database.entities.users.User;
 import database.exceptions.DaoException;
 import database.queries.users.UsersQueries;
 
@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static database.enums.UsersTableFields.*;
+import static database.enums.users.UsersTableFields.*;
 
 public class UsersDaoImplementation implements UsersDao {
 

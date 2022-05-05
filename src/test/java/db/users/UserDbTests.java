@@ -1,8 +1,8 @@
-package db;
+package db.users;
 
 import database.executors.Executor;
 import database.dao.implementations.users.UsersDaoImplementation;
-import database.entities.User;
+import database.entities.users.User;
 import database.exceptions.DaoException;
 import database.queries.users.UsersQueries;
 import org.apache.logging.log4j.Logger;

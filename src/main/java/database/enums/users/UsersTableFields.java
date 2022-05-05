@@ -1,4 +1,4 @@
-package database.enums;
+package database.enums.users;
 
 public enum UsersTableFields {
 

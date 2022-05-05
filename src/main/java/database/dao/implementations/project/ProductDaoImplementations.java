@@ -1,52 +1,117 @@
 package database.dao.implementations.project;
 
 import database.connection.ProjectDbConnectionCreator;
-import database.dao.BaseDao;
-import database.entities.Entity;
+import database.entities.project.Product;
 import database.exceptions.DaoException;
-import database.queries.project.CustomersQueries;
+import database.queries.project.ProductsQueries;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
-public class ProductDaoImplementations implements BaseDao {
+import static database.enums.project.OrdersTableFields.PRICE;
+import static database.enums.project.OrdersTableFields.PRODUCT_COUNT;
+import static database.enums.project.ProductsTableFields.*;
+import static database.enums.project.ProductsTableFields.ID;
+
+public class ProductDaoImplementations implements ProductsDao {
 
     @Override
-    public boolean create(Entity entity) throws DaoException {
-        return false;
-    }
-
-    @Override
-    public void create(List t) throws DaoException {
-
-    }
-
-    @Override
-    public List findAll() throws DaoException {
-        return null;
-    }
-
-    @Override
-    public Entity findEntityById(Object id) throws DaoException {
-        return null;
-    }
-
-    @Override
-    public Entity update(Entity entity) throws DaoException {
-        return null;
-    }
-
-    @Override
-    public boolean delete(Entity entity) throws DaoException, SQLException {
-        return false;
-    }
-
-    @Override
-    public boolean delete(Object id) throws DaoException, SQLException {
+    public boolean create(Product product) throws DaoException {
         try (Connection connection = ProjectDbConnectionCreator.createConnection();
-             PreparedStatement statement = connection.prepareStatement(CustomersQueries.DELETE_CUSTOMER_BY_ID)) {
+             PreparedStatement statement = connection.prepareStatement(ProductsQueries.INSERT_PRODUCT)) {
+            statement.setString(1, product.getProductName());
+            statement.setString(2, product.getManufacturer());
+            statement.setInt(3, product.getProductCount());
+            statement.setInt(4, product.getPrice());
+            return !statement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DaoException(e.getMessage());
+        }
+    }
+
+    @Override
+    public void create(List<Product> products) throws DaoException {
+        for (Product product : products) {
+            this.create(product);
+        }
+    }
+
+    @Override
+    public List<Product> findAll() throws DaoException {
+        List<Product> products = new ArrayList<>();
+        try (Connection connection = ProjectDbConnectionCreator.createConnection();
+             PreparedStatement statement = connection.prepareStatement(ProductsQueries.SELECT_PRODUCTS)) {
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Product product = Product.builder()
+                        .id(resultSet.getInt(ID.getFieldName()))
+                        .productName(resultSet.getString(PRODUCT_NAME.getFieldName()))
+                        .manufacturer(resultSet.getString(MANUFACTURER.getFieldName()))
+                        .productCount(resultSet.getInt(PRODUCT_COUNT.getFieldName()))
+                        .price(resultSet.getInt(PRICE.getFieldName()))
+                        .build();
+                products.add(product);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DaoException(e.getMessage());
+        }
+        return products;
+    }
+
+    @Override
+    public Product findEntityById(Long id) throws DaoException {
+        Product product = null;
+        try (Connection connection = ProjectDbConnectionCreator.createConnection();
+             PreparedStatement statement = connection.prepareStatement(ProductsQueries.SELECT_PRODUCT_BY_ID)) {
+            statement.setLong(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                product = Product.builder()
+                        .id(resultSet.getInt(ID.getFieldName()))
+                        .productName(resultSet.getString(PRODUCT_NAME.getFieldName()))
+                        .manufacturer(resultSet.getString(MANUFACTURER.getFieldName()))
+                        .productCount(resultSet.getInt(PRODUCT_COUNT.getFieldName()))
+                        .price(resultSet.getInt(PRICE.getFieldName()))
+                        .build();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DaoException(e.getMessage());
+        }
+        return product;
+    }
+
+    @Override
+    public Product update(Product product) throws DaoException {
+        try (Connection connection = ProjectDbConnectionCreator.createConnection();
+             PreparedStatement statement = connection.prepareStatement(ProductsQueries.UPDATE_PRODUCT_BY_ID)) {
+            statement.setString(1, product.getProductName());
+            statement.setString(2, product.getManufacturer());
+            statement.setInt(3, product.getProductCount());
+            statement.setInt(4, product.getPrice());
+            statement.executeUpdate();
+            return product;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DaoException(e.getMessage());
+        }
+    }
+
+    @Override
+    public boolean delete(Product product) throws DaoException, SQLException {
+        return this.delete(product.getId());
+    }
+
+    @Override
+    public boolean delete(Long id) throws DaoException, SQLException {
+        try (Connection connection = ProjectDbConnectionCreator.createConnection();
+             PreparedStatement statement = connection.prepareStatement(ProductsQueries.DELETE_PRODUCT_BY_ID)) {
             statement.setString(1, id.toString());
             int result = statement.executeUpdate();
             return result > 0;
