@@ -1,6 +1,7 @@
 package database.dao.implementations.project;
 
 import database.connection.ProjectDbConnectionCreator;
+import database.dao.implementations.AbstractDao;
 import database.entities.project.Product;
 import database.exceptions.DaoException;
 import database.queries.project.ProductsQueries;
@@ -17,7 +18,7 @@ import static database.enums.project.OrdersTableFields.PRODUCT_COUNT;
 import static database.enums.project.ProductsTableFields.*;
 import static database.enums.project.ProductsTableFields.ID;
 
-public class ProductDaoImplementations implements ProductsDao {
+public class ProductDaoImplementations extends AbstractDao<Product> {
 
     @Override
     public boolean create(Product product) throws DaoException {
@@ -65,7 +66,7 @@ public class ProductDaoImplementations implements ProductsDao {
     }
 
     @Override
-    public Product findEntityById(Long id) throws DaoException {
+    public Product findEntityById(long id) throws DaoException {
         Product product = null;
         try (Connection connection = ProjectDbConnectionCreator.createConnection();
              PreparedStatement statement = connection.prepareStatement(ProductsQueries.SELECT_PRODUCT_BY_ID)) {
@@ -109,10 +110,10 @@ public class ProductDaoImplementations implements ProductsDao {
     }
 
     @Override
-    public boolean delete(Long id) throws DaoException, SQLException {
+    public boolean delete(long id) throws DaoException, SQLException {
         try (Connection connection = ProjectDbConnectionCreator.createConnection();
              PreparedStatement statement = connection.prepareStatement(ProductsQueries.DELETE_PRODUCT_BY_ID)) {
-            statement.setString(1, id.toString());
+            statement.setLong(1, id);
             int result = statement.executeUpdate();
             return result > 0;
         } catch (SQLException e) {

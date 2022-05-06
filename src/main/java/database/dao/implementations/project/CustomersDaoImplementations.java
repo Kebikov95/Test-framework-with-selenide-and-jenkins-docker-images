@@ -1,6 +1,7 @@
 package database.dao.implementations.project;
 
 import database.connection.ProjectDbConnectionCreator;
+import database.dao.implementations.AbstractDao;
 import database.entities.project.Customer;
 import database.enums.users.UsersTableFields;
 import database.exceptions.DaoException;
@@ -16,7 +17,7 @@ import java.util.List;
 import static database.enums.project.CustomersTableFields.FIRST_NAME;
 import static database.enums.project.CustomersTableFields.ID;
 
-public class CustomersDaoImplementations implements CustomersDao {
+public class CustomersDaoImplementations extends AbstractDao<Customer> {
 
     @Override
     public boolean create(Customer customer) throws DaoException {
@@ -58,7 +59,7 @@ public class CustomersDaoImplementations implements CustomersDao {
     }
 
     @Override
-    public Customer findEntityById(Long id) throws DaoException {
+    public Customer findEntityById(long id) throws DaoException {
         Customer customer = null;
         try (Connection connection = ProjectDbConnectionCreator.createConnection();
              PreparedStatement statement = connection.prepareStatement(CustomersQueries.SELECT_CUSTOMER_BY_ID)) {
@@ -96,10 +97,10 @@ public class CustomersDaoImplementations implements CustomersDao {
     }
 
     @Override
-    public boolean delete(Long id) throws DaoException, SQLException {
+    public boolean delete(long id) throws DaoException, SQLException {
         try (Connection connection = ProjectDbConnectionCreator.createConnection();
              PreparedStatement statement = connection.prepareStatement(CustomersQueries.DELETE_CUSTOMER_BY_ID)) {
-            statement.setString(1, id.toString());
+            statement.setLong(1, id);
             int result = statement.executeUpdate();
             return result > 0;
         } catch (SQLException e) {

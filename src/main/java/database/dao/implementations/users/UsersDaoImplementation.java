@@ -14,7 +14,7 @@ import java.util.List;
 
 import static database.enums.users.UsersTableFields.*;
 
-public class UsersDaoImplementation implements UsersDao {
+public class UsersDaoImplementation extends UsersDao {
 
     @Override
     public boolean create(User user) throws DaoException {
@@ -60,7 +60,7 @@ public class UsersDaoImplementation implements UsersDao {
     }
 
     @Override
-    public User findEntityById(Long id) throws DaoException {
+    public User findEntityById(long id) throws DaoException {
         User user = null;
         try (Connection connection = UsersDbConnectionCreator.createConnection();
              PreparedStatement statement = connection.prepareStatement(UsersQueries.SELECT_USER_BY_ID)) {
@@ -109,10 +109,10 @@ public class UsersDaoImplementation implements UsersDao {
     }
 
     @Override
-    public boolean delete(Long id) throws DaoException {
+    public boolean delete(long id) throws DaoException {
         try (Connection connection = UsersDbConnectionCreator.createConnection();
              PreparedStatement statement = connection.prepareStatement(UsersQueries.DELETE_USER_BY_ID)) {
-            statement.setString(1, id.toString());
+            statement.setLong(1, id);
             int result = statement.executeUpdate();
             return result > 0;
         } catch (SQLException e) {

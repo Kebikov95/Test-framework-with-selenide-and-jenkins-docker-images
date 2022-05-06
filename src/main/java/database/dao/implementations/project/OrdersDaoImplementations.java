@@ -1,6 +1,7 @@
 package database.dao.implementations.project;
 
 import database.connection.ProjectDbConnectionCreator;
+import database.dao.implementations.AbstractDao;
 import database.entities.project.Order;
 import database.exceptions.DaoException;
 import database.queries.project.OrdersQueries;
@@ -14,7 +15,7 @@ import java.util.List;
 
 import static database.enums.project.OrdersTableFields.*;
 
-public class OrdersDaoImplementations implements OrdersDao {
+public class OrdersDaoImplementations extends AbstractDao<Order> {
 
     @Override
     public boolean create(Order order) throws DaoException {
@@ -64,7 +65,7 @@ public class OrdersDaoImplementations implements OrdersDao {
     }
 
     @Override
-    public Order findEntityById(Long id) throws DaoException {
+    public Order findEntityById(long id) throws DaoException {
         Order order = null;
         try (Connection connection = ProjectDbConnectionCreator.createConnection();
              PreparedStatement statement = connection.prepareStatement(OrdersQueries.SELECT_ORDER_BY_ID)) {
@@ -110,10 +111,10 @@ public class OrdersDaoImplementations implements OrdersDao {
     }
 
     @Override
-    public boolean delete(Long id) throws DaoException, SQLException {
+    public boolean delete(long id) throws DaoException, SQLException {
         try (Connection connection = ProjectDbConnectionCreator.createConnection();
              PreparedStatement statement = connection.prepareStatement(OrdersQueries.DELETE_ORDER_BY_ID)) {
-            statement.setString(1, id.toString());
+            statement.setLong(1, id);
             int result = statement.executeUpdate();
             return result > 0;
         } catch (SQLException e) {

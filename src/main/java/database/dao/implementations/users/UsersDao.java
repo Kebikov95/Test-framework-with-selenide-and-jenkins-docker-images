@@ -1,10 +1,10 @@
 package database.dao.implementations.users;
 
-import database.dao.BaseDao;
+import database.dao.implementations.AbstractDao;
 import database.entities.users.User;
 import database.exceptions.DaoException;
 
-public interface UsersDao extends BaseDao<Long, User> {
+public abstract class UsersDao extends AbstractDao<User> {
 
-    User findUserByUserName(String patternName) throws DaoException;
+    public abstract User findUserByUserName(String patternName) throws DaoException;
 }
