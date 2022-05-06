@@ -3,7 +3,7 @@ package database.enums.project;
 public enum CustomersTableFields {
 
     ID("Id"),
-    FIRST_NAME("FirstName");
+    NAME("Name");
 
     private final String fieldName;
 

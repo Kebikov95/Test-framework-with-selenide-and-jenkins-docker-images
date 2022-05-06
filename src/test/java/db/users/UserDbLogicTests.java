@@ -1,5 +1,6 @@
 package db.users;
 
+import database.connection.UsersDbConnectionCreator;
 import database.exceptions.DaoException;
 import database.executors.Executor;
 import database.logic.UsersDbLogic;
@@ -10,27 +11,28 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class UserDbLogicTests {
+class UserDbLogicTests extends BaseTest {
 
     @BeforeAll
-    static void createDb() {
+    static void createDb() throws SQLException {
         List<String> queries = new ArrayList<>();
         queries.add(UsersQueries.CREATE_USERS_TABLE);
         queries.add(UsersQueries.INSERT_USERS_DATA);
-        Executor.executeBatch(queries);
+        Executor.executeBatch(UsersDbConnectionCreator.createConnection(), queries);
     }
 
     @AfterAll
-    static void deleteDb() {
+    static void deleteDb() throws SQLException {
         List<String> queries = new ArrayList<>();
         queries.add(UsersQueries.DELETE_USERS_TABLE);
-        Executor.executeBatch(queries);
+        Executor.executeBatch(UsersDbConnectionCreator.createConnection(), queries);
     }
 
     // LOGIN LOGIC

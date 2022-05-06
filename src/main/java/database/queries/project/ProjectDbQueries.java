@@ -35,11 +35,11 @@ public class ProjectDbQueries {
             "    Name VARCHAR(30) NOT NULL\n" +
             ");";
     public static final String DELETE_CUSTOMERS_TABLE = "DROP TABLE Customers";
-    public static final String INSERT_CUSTOMERS_DATA = "INSERT INTO Customers(FirstName) " +
-            "VALUES ('Kevin Miller'), ('Martin Sven'),('Sam Smith');";
+    public static final String INSERT_CUSTOMERS_DATA = "INSERT INTO Customers(Name)\n" +
+            "VALUES ('Kevin Miller'), ('Martin Sven'), ('Sam Smith');";
 
     // ORDERS TABLE
-    public static  final String CREATE_ORDERS_TABLE = "CREATE TABLE Orders\n" +
+    public static final String CREATE_ORDERS_TABLE = "CREATE TABLE Orders\n" +
             "(\n" +
             "    Id INT AUTO_INCREMENT PRIMARY KEY,\n" +
             "    ProductId INT NOT NULL,\n" +

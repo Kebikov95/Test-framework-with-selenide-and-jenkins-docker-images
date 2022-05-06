@@ -1,40 +1,39 @@
 package db.users;
 
+import database.connection.UsersDbConnectionCreator;
 import database.executors.Executor;
 import database.dao.implementations.users.UsersDaoImplementation;
 import database.entities.users.User;
 import database.exceptions.DaoException;
 import database.queries.users.UsersQueries;
-import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.apache.logging.log4j.LogManager.getLogger;
 import static org.junit.jupiter.api.Assertions.*;
 
-class UserDbTests {
+class UserDbTests extends BaseTest {
 
-    private static final Logger log = getLogger(UserDbTests.class);
     private static final UsersDaoImplementation USER_DAO_IMPL = new UsersDaoImplementation();
 
     @BeforeAll
-    static void createDb() {
+    static void createDb() throws SQLException {
         List<String> queries = new ArrayList<>();
         queries.add(UsersQueries.CREATE_USERS_TABLE);
         queries.add(UsersQueries.INSERT_USERS_DATA);
-        Executor.executeBatch(queries);
+        Executor.executeBatch(UsersDbConnectionCreator.createConnection(), queries);
     }
 
     @AfterAll
-    static void deleteDb() {
+    static void deleteDb() throws SQLException {
         List<String> queries = new ArrayList<>();
         queries.add(UsersQueries.DELETE_USERS_TABLE);
-        Executor.executeBatch(queries);
+        Executor.executeBatch(UsersDbConnectionCreator.createConnection(), queries);
     }
 
     // CREATE

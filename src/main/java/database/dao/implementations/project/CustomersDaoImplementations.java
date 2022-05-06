@@ -1,8 +1,9 @@
 package database.dao.implementations.project;
 
 import database.connection.ProjectDbConnectionCreator;
-import database.dao.implementations.AbstractDao;
+import database.connection.UsersDbConnectionCreator;
 import database.entities.project.Customer;
+import database.enums.project.CustomersTableFields;
 import database.enums.users.UsersTableFields;
 import database.exceptions.DaoException;
 import database.queries.project.CustomersQueries;
@@ -14,10 +15,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static database.enums.project.CustomersTableFields.FIRST_NAME;
-import static database.enums.project.CustomersTableFields.ID;
+import static database.enums.project.CustomersTableFields.*;
 
-public class CustomersDaoImplementations extends AbstractDao<Customer> {
+public class CustomersDaoImplementations extends CustomersDao {
 
     @Override
     public boolean create(Customer customer) throws DaoException {
@@ -47,7 +47,7 @@ public class CustomersDaoImplementations extends AbstractDao<Customer> {
             while (resultSet.next()) {
                 Customer customer = Customer.builder()
                         .id(resultSet.getInt(ID.getFieldName()))
-                        .firstName(resultSet.getString(FIRST_NAME.getFieldName()))
+                        .firstName(resultSet.getString(NAME.getFieldName()))
                         .build();
                 customers.add(customer);
             }
@@ -68,7 +68,27 @@ public class CustomersDaoImplementations extends AbstractDao<Customer> {
             while (resultSet.next()) {
                 customer = Customer.builder()
                         .id(resultSet.getInt(UsersTableFields.ID.getFieldName()))
-                        .firstName(resultSet.getString(FIRST_NAME.getFieldName()))
+                        .firstName(resultSet.getString(NAME.getFieldName()))
+                        .build();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DaoException(e.getMessage());
+        }
+        return customer;
+    }
+
+    @Override
+    public Customer findCustomerByFirstName(String patternName) throws DaoException {
+        Customer customer = null;
+        try (Connection connection = UsersDbConnectionCreator.createConnection();
+             PreparedStatement statement = connection.prepareStatement(CustomersQueries.SELECT_USER_BY_USER_NAME)) {
+            statement.setString(1, patternName);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                customer = Customer.builder()
+                        .id(resultSet.getInt(CustomersTableFields.ID.getFieldName()))
+                        .firstName(resultSet.getString(NAME.getFieldName()))
                         .build();
             }
         } catch (SQLException e) {

@@ -1,10 +1,14 @@
 package database.dao.implementations.project;
 
 import database.connection.ProjectDbConnectionCreator;
+import database.connection.UsersDbConnectionCreator;
 import database.dao.implementations.AbstractDao;
 import database.entities.project.Product;
+import database.entities.users.User;
+import database.enums.users.UsersTableFields;
 import database.exceptions.DaoException;
 import database.queries.project.ProductsQueries;
+import database.queries.users.UsersQueries;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,8 +21,9 @@ import static database.enums.project.OrdersTableFields.PRICE;
 import static database.enums.project.OrdersTableFields.PRODUCT_COUNT;
 import static database.enums.project.ProductsTableFields.*;
 import static database.enums.project.ProductsTableFields.ID;
+import static database.enums.users.UsersTableFields.*;
 
-public class ProductDaoImplementations extends AbstractDao<Product> {
+public class ProductsDaoImplementations extends AbstractDao<Product> {
 
     @Override
     public boolean create(Product product) throws DaoException {
@@ -86,6 +91,27 @@ public class ProductDaoImplementations extends AbstractDao<Product> {
             throw new DaoException(e.getMessage());
         }
         return product;
+    }
+
+    public User findEntityByUserName(String patternName) throws DaoException {
+        User user = null;
+        try (Connection connection = UsersDbConnectionCreator.createConnection();
+             PreparedStatement statement = connection.prepareStatement(UsersQueries.SELECT_USER_BY_USER_NAME)) {
+            statement.setString(1, patternName);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                user = User.builder()
+                        .id(resultSet.getInt(UsersTableFields.ID.getFieldName()))
+                        .userName(resultSet.getString(USER_NAME.getFieldName()))
+                        .password(resultSet.getString(PASSWORD.getFieldName()))
+                        .email(resultSet.getString(EMAIL.getFieldName()))
+                        .build();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DaoException(e.getMessage());
+        }
+        return user;
     }
 
     @Override
