@@ -6,6 +6,7 @@ import database.dao.implementations.users.UsersDaoImplementation;
 import database.entities.users.User;
 import database.exceptions.DaoException;
 import database.queries.users.UsersQueries;
+import db.BaseTest;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;

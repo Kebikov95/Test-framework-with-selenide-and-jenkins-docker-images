@@ -1,4 +1,4 @@
-package db.users;
+package db.project;
 
 import database.connection.ProjectDbConnectionCreator;
 import database.dao.implementations.project.CustomersDaoImplementations;
@@ -11,6 +11,7 @@ import database.entities.project.Order;
 import database.exceptions.DaoException;
 import database.executors.Executor;
 import database.queries.project.ProjectDbQueries;
+import db.BaseTest;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -20,7 +21,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static java.lang.String.format;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 

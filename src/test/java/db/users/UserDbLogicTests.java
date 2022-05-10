@@ -5,6 +5,7 @@ import database.exceptions.DaoException;
 import database.executors.Executor;
 import database.logic.UsersDbLogic;
 import database.queries.users.UsersQueries;
+import db.BaseTest;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.params.ParameterizedTest;
