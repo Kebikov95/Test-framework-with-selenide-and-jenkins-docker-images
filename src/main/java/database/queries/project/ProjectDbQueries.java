@@ -50,7 +50,7 @@ public class ProjectDbQueries {
             "    FOREIGN KEY (ProductId) REFERENCES Products(Id) ON DELETE CASCADE,\n" +
             "    FOREIGN KEY (CustomerId) REFERENCES Customers(Id) ON DELETE CASCADE\n" +
             ");";
-    public static final String DELETE_ORDERS_TABLE = "DROP TABLE Customers";
+    public static final String DELETE_ORDERS_TABLE = "DROP TABLE Orders";
     public static final String INSERT_ORDERS_DATA = "INSERT INTO Orders(ProductId, CustomerId, CreatedAt, ProductCount, Price)\n" +
             "VALUES ('5', '1', '2022-04-21', '2', '46000'),\n" +
             "('1', '1', '2022-04-22', '1', '56000'),\n" +

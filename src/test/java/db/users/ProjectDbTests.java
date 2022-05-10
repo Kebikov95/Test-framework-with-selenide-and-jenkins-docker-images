@@ -4,7 +4,10 @@ import database.connection.ProjectDbConnectionCreator;
 import database.dao.implementations.project.CustomersDaoImplementations;
 import database.dao.implementations.project.OrdersDaoImplementations;
 import database.dao.implementations.project.ProductsDaoImplementations;
+import database.entities.Entity;
 import database.entities.project.Customer;
+import database.entities.project.Product;
+import database.entities.project.Order;
 import database.exceptions.DaoException;
 import database.executors.Executor;
 import database.queries.project.ProjectDbQueries;
@@ -15,7 +18,9 @@ import org.junit.jupiter.api.Test;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import static java.lang.String.format;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -29,20 +34,20 @@ public class ProjectDbTests extends BaseTest {
     static void createDb() throws SQLException {
         List<String> queries = new ArrayList<>();
         queries.add(ProjectDbQueries.CREATE_CUSTOMERS_TABLE);
-//        queries.add(ProjectDbQueries.CREATE_PRODUCTS_TABLE);
-//        queries.add(ProjectDbQueries.CREATE_ORDERS_TABLE);
+        queries.add(ProjectDbQueries.CREATE_PRODUCTS_TABLE);
+        queries.add(ProjectDbQueries.CREATE_ORDERS_TABLE);
         queries.add(ProjectDbQueries.INSERT_CUSTOMERS_DATA);
-//        queries.add(ProjectDbQueries.INSERT_PRODUCTS_DATA);
-//        queries.add(ProjectDbQueries.INSERT_ORDERS_DATA);
+        queries.add(ProjectDbQueries.INSERT_PRODUCTS_DATA);
+        queries.add(ProjectDbQueries.INSERT_ORDERS_DATA);
         Executor.executeBatch(ProjectDbConnectionCreator.createConnection(), queries);
     }
 
     @AfterAll
     static void deleteDb() throws SQLException {
         List<String> queries = new ArrayList<>();
-//        queries.add(ProjectDbQueries.DELETE_ORDERS_TABLE);
+        queries.add(ProjectDbQueries.DELETE_ORDERS_TABLE);
         queries.add(ProjectDbQueries.DELETE_CUSTOMERS_TABLE);
-//        queries.add(ProjectDbQueries.DELETE_PRODUCTS_TABLE);
+        queries.add(ProjectDbQueries.DELETE_PRODUCTS_TABLE);
         Executor.executeBatch(ProjectDbConnectionCreator.createConnection(), queries);
     }
 
@@ -55,6 +60,47 @@ public class ProjectDbTests extends BaseTest {
         assertTrue(response, "The customer hasn't been added.");
         Customer dbCustomer = CUSTOMERS_DAO_IMPL.findCustomerByFirstName(customer.getFirstName());
         assertEquals(customer.getFirstName(), dbCustomer.getFirstName());
-        log.info("The user has been added: [{}]", customer);
+        log.info("The customer has been added: [{}]", customer);
+    }
+
+    @Test
+    void createProduct() throws DaoException {
+        Product product = Product.builder()
+                .productName("iPhone 11")
+                .manufacturer("Apple")
+                .productCount(5)
+                .price(64330)
+                .build();
+        boolean response = PRODUCTS_DAO_IMPL.create(product);
+        assertTrue(response, "The product hasn't been added.");
+        Product dbProduct = PRODUCTS_DAO_IMPL.findEntityByProductName(product.getProductName());
+        assertEquals(product.getProductName(), dbProduct.getProductName());
+        log.info("The product has been added: [{}]", product);
+    }
+
+    @Test
+     void createOrder() throws DaoException {
+        Order order = Order.builder()
+                .productId(2)
+                .customerId(2)
+                .createdAt("2022-04-28")
+                .productCount(2)
+                .price(84000)
+                .build();
+        boolean response = ORDERS_DAO_IMPL.create(order);
+        assertTrue(response, "The order hasn't been added.");
+        List<Order> dbOrders = ORDERS_DAO_IMPL.findAll();
+        assertTrue(isListContainsEntity(dbOrders.stream()
+                .map(e -> (Entity) e).collect(Collectors.toList()), order));
+        log.info("The Order has been added: [{}]", order);
+    }
+
+    private boolean isListContainsEntity(List<Entity> entities, Entity findEntity) {
+        for (Entity entity : entities) {
+            if (entity.equals(findEntity)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

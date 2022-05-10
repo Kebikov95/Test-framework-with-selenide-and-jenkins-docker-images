@@ -93,25 +93,26 @@ public class ProductsDaoImplementations extends AbstractDao<Product> {
         return product;
     }
 
-    public User findEntityByUserName(String patternName) throws DaoException {
-        User user = null;
+    public Product findEntityByProductName(String patternName) throws DaoException {
+        Product product = null;
         try (Connection connection = UsersDbConnectionCreator.createConnection();
-             PreparedStatement statement = connection.prepareStatement(UsersQueries.SELECT_USER_BY_USER_NAME)) {
+             PreparedStatement statement = connection.prepareStatement(ProductsQueries.SELECT_PRODUCT_BY_PRODUCT_NAME)) {
             statement.setString(1, patternName);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                user = User.builder()
-                        .id(resultSet.getInt(UsersTableFields.ID.getFieldName()))
-                        .userName(resultSet.getString(USER_NAME.getFieldName()))
-                        .password(resultSet.getString(PASSWORD.getFieldName()))
-                        .email(resultSet.getString(EMAIL.getFieldName()))
+                product = Product.builder()
+                        .id(resultSet.getInt(ID.getFieldName()))
+                        .productName(resultSet.getString(PRODUCT_NAME.getFieldName()))
+                        .manufacturer(resultSet.getString(MANUFACTURER.getFieldName()))
+                        .productCount(resultSet.getInt(PRODUCT_COUNT.getFieldName()))
+                        .price(resultSet.getInt(PRICE.getFieldName()))
                         .build();
             }
         } catch (SQLException e) {
             e.printStackTrace();
             throw new DaoException(e.getMessage());
         }
-        return user;
+        return product;
     }
 
     @Override
