@@ -2,13 +2,9 @@ package database.dao.implementations.project;
 
 import database.connection.ProjectDbConnectionCreator;
 import database.connection.UsersDbConnectionCreator;
-import database.dao.implementations.AbstractDao;
 import database.entities.project.Product;
-import database.entities.users.User;
-import database.enums.users.UsersTableFields;
 import database.exceptions.DaoException;
 import database.queries.project.ProductsQueries;
-import database.queries.users.UsersQueries;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -21,9 +17,8 @@ import static database.enums.project.OrdersTableFields.PRICE;
 import static database.enums.project.OrdersTableFields.PRODUCT_COUNT;
 import static database.enums.project.ProductsTableFields.*;
 import static database.enums.project.ProductsTableFields.ID;
-import static database.enums.users.UsersTableFields.*;
 
-public class ProductsDaoImplementations extends AbstractDao<Product> {
+public class ProductsDaoImplementations extends ProductsDao {
 
     @Override
     public boolean create(Product product) throws DaoException {
@@ -93,6 +88,7 @@ public class ProductsDaoImplementations extends AbstractDao<Product> {
         return product;
     }
 
+    @Override
     public Product findEntityByProductName(String patternName) throws DaoException {
         Product product = null;
         try (Connection connection = UsersDbConnectionCreator.createConnection();
