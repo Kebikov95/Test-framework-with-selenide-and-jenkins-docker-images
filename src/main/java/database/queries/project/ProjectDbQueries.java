@@ -6,8 +6,9 @@ public class ProjectDbQueries {
     }
 
     // PROJECT DB
-    public static final String CREATE_PROJECT_DB = "CREATE project_db";
+    public static final String CREATE_PROJECT_DB = "CREATE DATABASE [IF NOT EXISTS] project_db";
     public static final String USE_PROJECT_DB = "USE project_db";
+    public static final String DROP_PROJECT_DB = "DROP DATABASE project_db";
 
     // PRODUCTS TABLE
     public static final String CREATE_PRODUCTS_TABLE = "CREATE TABLE Products\n" +

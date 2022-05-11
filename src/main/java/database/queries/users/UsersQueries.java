@@ -5,6 +5,11 @@ public class UsersQueries {
     private UsersQueries() {
     }
 
+    // USERS DB QUERIES
+    public static final String CREATE_USERS_DB = "CREATE DATABASE [IF NOT EXISTS] users_db";
+    public static final String USE_USERS_DB = "USE users_db";
+    public static final String DROP_USERS_DB = "DROP DATABASE users_db";
+
     // USERS TABLE QUERIES
     public static final String INSERT_USER = "INSERT Users(UserName, Password, Email) VALUES(?,?,?);";
     public static final String SELECT_USERS = "SELECT * FROM Users;";
@@ -13,9 +18,6 @@ public class UsersQueries {
     public static final String UPDATE_USER_BY_ID = "UPDATE Users SET UserName = ?, Password = ?, Email = ? WHERE Id = ?;";
     public static final String DELETE_USER_BY_ID = "DELETE FROM Users WHERE Id = ?;";
 
-    // USERS DB QUERIES
-    public static final String CREATE_USERS_DB = "CREATE DATABASE users_db";
-    public static final String USE_USERS_DB = "USE users_db";
 
     // USERS INSERT DATA QUERIES
     public static final String CREATE_USERS_TABLE = "CREATE TABLE IF NOT EXISTS Users\n" +
