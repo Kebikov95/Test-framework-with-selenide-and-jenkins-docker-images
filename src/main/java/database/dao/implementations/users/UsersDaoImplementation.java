@@ -25,7 +25,6 @@ public class UsersDaoImplementation extends UsersDao {
             statement.setString(3, user.getEmail());
             return !statement.execute();
         } catch (SQLException e) {
-            e.printStackTrace();
             throw new DaoException(e.getMessage());
         }
     }
@@ -53,7 +52,6 @@ public class UsersDaoImplementation extends UsersDao {
                 users.add(user);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
             throw new DaoException(e.getMessage());
         }
         return users;
@@ -75,7 +73,6 @@ public class UsersDaoImplementation extends UsersDao {
                         .build();
             }
         } catch (SQLException e) {
-            e.printStackTrace();
             throw new DaoException(e.getMessage());
         }
         return user;
@@ -97,7 +94,6 @@ public class UsersDaoImplementation extends UsersDao {
                         .build();
             }
         } catch (SQLException e) {
-            e.printStackTrace();
             throw new DaoException(e.getMessage());
         }
         return user;
@@ -116,7 +112,6 @@ public class UsersDaoImplementation extends UsersDao {
             int result = statement.executeUpdate();
             return result > 0;
         } catch (SQLException e) {
-            e.printStackTrace();
             throw new DaoException(e.getMessage());
         }
     }
@@ -132,7 +127,6 @@ public class UsersDaoImplementation extends UsersDao {
             statement.executeUpdate();
             return user;
         } catch (SQLException e) {
-            e.printStackTrace();
             throw new DaoException(e.getMessage());
         }
     }

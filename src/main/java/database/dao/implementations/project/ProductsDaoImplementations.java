@@ -30,7 +30,6 @@ public class ProductsDaoImplementations extends ProductsDao {
             statement.setInt(4, product.getPrice());
             return !statement.execute();
         } catch (SQLException e) {
-            e.printStackTrace();
             throw new DaoException(e.getMessage());
         }
     }
@@ -59,7 +58,6 @@ public class ProductsDaoImplementations extends ProductsDao {
                 products.add(product);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
             throw new DaoException(e.getMessage());
         }
         return products;
@@ -82,7 +80,6 @@ public class ProductsDaoImplementations extends ProductsDao {
                         .build();
             }
         } catch (SQLException e) {
-            e.printStackTrace();
             throw new DaoException(e.getMessage());
         }
         return product;
@@ -91,7 +88,7 @@ public class ProductsDaoImplementations extends ProductsDao {
     @Override
     public Product findEntityByProductName(String patternName) throws DaoException {
         Product product = null;
-        try (Connection connection = UsersDbConnectionCreator.createConnection();
+        try (Connection connection = ProjectDbConnectionCreator.createConnection();
              PreparedStatement statement = connection.prepareStatement(ProductsQueries.SELECT_PRODUCT_BY_PRODUCT_NAME)) {
             statement.setString(1, patternName);
             ResultSet resultSet = statement.executeQuery();
@@ -105,7 +102,6 @@ public class ProductsDaoImplementations extends ProductsDao {
                         .build();
             }
         } catch (SQLException e) {
-            e.printStackTrace();
             throw new DaoException(e.getMessage());
         }
         return product;
@@ -122,7 +118,6 @@ public class ProductsDaoImplementations extends ProductsDao {
             statement.executeUpdate();
             return product;
         } catch (SQLException e) {
-            e.printStackTrace();
             throw new DaoException(e.getMessage());
         }
     }
@@ -140,7 +135,6 @@ public class ProductsDaoImplementations extends ProductsDao {
             int result = statement.executeUpdate();
             return result > 0;
         } catch (SQLException e) {
-            e.printStackTrace();
             throw new DaoException(e.getMessage());
         }
     }

@@ -26,7 +26,6 @@ public class CustomersDaoImplementations extends CustomersDao {
             statement.setString(1, customer.getFirstName());
             return !statement.execute();
         } catch (SQLException e) {
-            e.printStackTrace();
             throw new DaoException(e.getMessage());
         }
     }
@@ -52,7 +51,6 @@ public class CustomersDaoImplementations extends CustomersDao {
                 customers.add(customer);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
             throw new DaoException(e.getMessage());
         }
         return customers;
@@ -72,7 +70,6 @@ public class CustomersDaoImplementations extends CustomersDao {
                         .build();
             }
         } catch (SQLException e) {
-            e.printStackTrace();
             throw new DaoException(e.getMessage());
         }
         return customer;
@@ -81,7 +78,7 @@ public class CustomersDaoImplementations extends CustomersDao {
     @Override
     public Customer findCustomerByFirstName(String patternName) throws DaoException {
         Customer customer = null;
-        try (Connection connection = UsersDbConnectionCreator.createConnection();
+        try (Connection connection = ProjectDbConnectionCreator.createConnection();
              PreparedStatement statement = connection.prepareStatement(CustomersQueries.SELECT_USER_BY_USER_NAME)) {
             statement.setString(1, patternName);
             ResultSet resultSet = statement.executeQuery();
@@ -92,7 +89,6 @@ public class CustomersDaoImplementations extends CustomersDao {
                         .build();
             }
         } catch (SQLException e) {
-            e.printStackTrace();
             throw new DaoException(e.getMessage());
         }
         return customer;
@@ -106,7 +102,6 @@ public class CustomersDaoImplementations extends CustomersDao {
             statement.executeUpdate();
             return customer;
         } catch (SQLException e) {
-            e.printStackTrace();
             throw new DaoException(e.getMessage());
         }
     }
@@ -124,7 +119,6 @@ public class CustomersDaoImplementations extends CustomersDao {
             int result = statement.executeUpdate();
             return result > 0;
         } catch (SQLException e) {
-            e.printStackTrace();
             throw new DaoException(e.getMessage());
         }
     }

@@ -28,7 +28,6 @@ public class OrdersDaoImplementations extends AbstractDao<Order> {
             statement.setInt(5, order.getPrice());
             return !statement.execute();
         } catch (SQLException e) {
-            e.printStackTrace();
             throw new DaoException(e.getMessage());
         }
     }
@@ -58,7 +57,6 @@ public class OrdersDaoImplementations extends AbstractDao<Order> {
                 orders.add(order);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
             throw new DaoException(e.getMessage());
         }
         return orders;
@@ -82,7 +80,6 @@ public class OrdersDaoImplementations extends AbstractDao<Order> {
                         .build();
             }
         } catch (SQLException e) {
-            e.printStackTrace();
             throw new DaoException(e.getMessage());
         }
         return order;
@@ -100,7 +97,6 @@ public class OrdersDaoImplementations extends AbstractDao<Order> {
             statement.executeUpdate();
             return order;
         } catch (SQLException e) {
-            e.printStackTrace();
             throw new DaoException(e.getMessage());
         }
     }
@@ -118,7 +114,6 @@ public class OrdersDaoImplementations extends AbstractDao<Order> {
             int result = statement.executeUpdate();
             return result > 0;
         } catch (SQLException e) {
-            e.printStackTrace();
             throw new DaoException(e.getMessage());
         }
     }
