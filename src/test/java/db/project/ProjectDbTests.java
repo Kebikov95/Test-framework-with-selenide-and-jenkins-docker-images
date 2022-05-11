@@ -14,6 +14,7 @@ import database.queries.project.ProjectDbQueries;
 import db.BaseTest;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
@@ -24,7 +25,7 @@ import java.util.stream.Collectors;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class ProjectDbTests extends BaseTest {
+class ProjectDbTests extends BaseTest {
 
     private static final CustomersDaoImplementations CUSTOMERS_DAO_IMPL = new CustomersDaoImplementations();
     private static final ProductsDaoImplementations PRODUCTS_DAO_IMPL = new ProductsDaoImplementations();
@@ -33,6 +34,8 @@ public class ProjectDbTests extends BaseTest {
     @BeforeAll
     static void createDb() throws SQLException {
         List<String> queries = new ArrayList<>();
+        queries.add(ProjectDbQueries.CREATE_PROJECT_DB);
+        queries.add(ProjectDbQueries.USE_PROJECT_DB);
         queries.add(ProjectDbQueries.CREATE_CUSTOMERS_TABLE);
         queries.add(ProjectDbQueries.CREATE_PRODUCTS_TABLE);
         queries.add(ProjectDbQueries.CREATE_ORDERS_TABLE);
@@ -48,6 +51,14 @@ public class ProjectDbTests extends BaseTest {
         queries.add(ProjectDbQueries.DELETE_ORDERS_TABLE);
         queries.add(ProjectDbQueries.DELETE_CUSTOMERS_TABLE);
         queries.add(ProjectDbQueries.DELETE_PRODUCTS_TABLE);
+        Executor.executeBatch(ProjectDbConnectionCreator.createConnection(), queries);
+        log.info("Drop all project tables.");
+    }
+
+    @BeforeEach
+    void useDB() throws SQLException {
+        List<String> queries = new ArrayList<>();
+        queries.add(ProjectDbQueries.CREATE_PROJECT_DB);
         Executor.executeBatch(ProjectDbConnectionCreator.createConnection(), queries);
     }
 
