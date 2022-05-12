@@ -34,7 +34,7 @@ class ProjectDbTests extends BaseTest {
     @BeforeAll
     static void createDb() throws SQLException {
         List<String> queries = new ArrayList<>();
-        queries.add(ProjectDbQueries.CREATE_PROJECT_DB);
+//        queries.add(ProjectDbQueries.CREATE_PROJECT_DB);
         queries.add(ProjectDbQueries.USE_PROJECT_DB);
         queries.add(ProjectDbQueries.CREATE_CUSTOMERS_TABLE);
         queries.add(ProjectDbQueries.CREATE_PRODUCTS_TABLE);
@@ -53,13 +53,6 @@ class ProjectDbTests extends BaseTest {
         queries.add(ProjectDbQueries.DELETE_PRODUCTS_TABLE);
         Executor.executeBatch(ProjectDbConnectionCreator.createConnection(), queries);
         log.info("Drop all project tables.");
-    }
-
-    @BeforeEach
-    void useDB() throws SQLException {
-        List<String> queries = new ArrayList<>();
-        queries.add(ProjectDbQueries.CREATE_PROJECT_DB);
-        Executor.executeBatch(ProjectDbConnectionCreator.createConnection(), queries);
     }
 
     @Test

@@ -24,7 +24,7 @@ class UserDbLogicTests extends BaseTest {
     @BeforeAll
     static void createDb() throws SQLException {
         List<String> queries = new ArrayList<>();
-        queries.add(UsersQueries.CREATE_USERS_DB);
+//        queries.add(UsersQueries.CREATE_USERS_DB);
         queries.add(UsersQueries.USE_USERS_DB);
         queries.add(UsersQueries.CREATE_USERS_TABLE);
         queries.add(UsersQueries.INSERT_USERS_DATA);
