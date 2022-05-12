@@ -4,6 +4,7 @@ import database.connection.ProjectDbConnectionCreator;
 import database.dao.implementations.project.CustomersDaoImplementations;
 import database.dao.implementations.project.OrdersDaoImplementations;
 import database.dao.implementations.project.ProductsDaoImplementations;
+import database.entities.Entities;
 import database.entities.Entity;
 import database.entities.project.Customer;
 import database.entities.project.Product;
@@ -14,7 +15,6 @@ import database.queries.project.ProjectDbQueries;
 import db.BaseTest;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
@@ -94,17 +94,8 @@ class ProjectDbTests extends BaseTest {
         boolean response = ORDERS_DAO_IMPL.create(order);
         assertTrue(response, "The order hasn't been added.");
         List<Order> dbOrders = ORDERS_DAO_IMPL.findAll();
-        assertTrue(isListContainsEntity(dbOrders.stream()
+        assertTrue(Entities.isListContainsEntity(dbOrders.stream()
                 .map(e -> (Entity) e).collect(Collectors.toList()), order));
         log.info("The Order has been added: [{}]", order);
-    }
-
-    private boolean isListContainsEntity(List<Entity> entities, Entity findEntity) {
-        for (Entity entity : entities) {
-            if (entity.equals(findEntity)) {
-                return true;
-            }
-        }
-        return false;
     }
 }

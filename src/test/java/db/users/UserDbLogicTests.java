@@ -65,9 +65,9 @@ class UserDbLogicTests extends BaseTest {
 
     static Stream<Arguments> userListProviderForDelete() {
         return Stream.of(
-                Arguments.of("Simon2312", "23122132", false),
+                Arguments.of("Simon2312", "anas2312", false),
                 Arguments.of("Anastasia2312", "qwerty", false),
-                Arguments.of("Anastasia2312", "23122132", true)
+                Arguments.of("Anastasia2312", "anas2312", true)
         );
     }
 }

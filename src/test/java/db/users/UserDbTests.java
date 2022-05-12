@@ -44,7 +44,7 @@ class UserDbTests extends BaseTest {
     void addUser() throws DaoException {
         User user = User.builder()
                 .userName("Mercy2321")
-                .password("23212321")
+                .password("merc2321")
                 .email("merc23@yahoo.com")
                 .build();
         boolean response = USER_DAO_IMPL.create(user);
