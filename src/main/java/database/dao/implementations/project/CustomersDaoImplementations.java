@@ -1,10 +1,8 @@
 package database.dao.implementations.project;
 
 import database.connection.ProjectDbConnectionCreator;
-import database.connection.UsersDbConnectionCreator;
 import database.entities.project.Customer;
 import database.enums.project.CustomersTableFields;
-import database.enums.users.UsersTableFields;
 import database.exceptions.DaoException;
 import database.queries.project.CustomersQueries;
 
@@ -65,7 +63,7 @@ public class CustomersDaoImplementations extends CustomersDao {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 customer = Customer.builder()
-                        .id(resultSet.getInt(UsersTableFields.ID.getFieldName()))
+                        .id(resultSet.getInt(ID.getFieldName()))
                         .firstName(resultSet.getString(NAME.getFieldName()))
                         .build();
             }

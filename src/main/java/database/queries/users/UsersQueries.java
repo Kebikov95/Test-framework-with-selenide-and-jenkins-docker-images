@@ -33,5 +33,5 @@ public class UsersQueries {
             "('Erick', 'pass1234', 'erick@gmail.com'),\n" +
             "('FrankUK', 'gb_qwerty', 'fransis1990@gmail.com'),\n" +
             "('AdelAdel', 'rolling_in_the_deep', 'adad2022@gmail.com'),\n" +
-            "('Anastasia2312', '23122132', 'anastasia@mail.com');";
+            "('Anastasia2312', 'anas2312', 'anastasia@mail.com');";
 }

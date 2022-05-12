@@ -1,7 +1,6 @@
 package database.dao.implementations.project;
 
 import database.connection.ProjectDbConnectionCreator;
-import database.connection.UsersDbConnectionCreator;
 import database.entities.project.Product;
 import database.exceptions.DaoException;
 import database.queries.project.ProductsQueries;
