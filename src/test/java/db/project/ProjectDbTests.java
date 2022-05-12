@@ -13,18 +13,16 @@ import database.exceptions.DaoException;
 import database.executors.Executor;
 import database.queries.project.ProjectDbQueries;
 import db.BaseTest;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class ProjectDbTests extends BaseTest {
 
     private static final CustomersDaoImplementations CUSTOMERS_DAO_IMPL = new CustomersDaoImplementations();
@@ -56,15 +54,43 @@ class ProjectDbTests extends BaseTest {
     }
 
     @Test
+    @org.junit.jupiter.api.Order(1)
     void createCustomer() throws DaoException {
         Customer customer = Customer.builder()
                 .firstName("Mikel Owen")
                 .build();
         boolean response = CUSTOMERS_DAO_IMPL.create(customer);
         assertTrue(response, "The customer hasn't been added.");
-        Customer dbCustomer = CUSTOMERS_DAO_IMPL.findCustomerByFirstName(customer.getFirstName());
+        Customer dbCustomer = CUSTOMERS_DAO_IMPL.findCustomerByName(customer.getFirstName());
         assertEquals(customer.getFirstName(), dbCustomer.getFirstName());
         log.info("The customer has been added: [{}]", customer);
+    }
+
+    @Test
+    @org.junit.jupiter.api.Order(2)
+    void readCustomer() throws DaoException {
+        Customer customer = CUSTOMERS_DAO_IMPL.findCustomerByName("Mikel Owen");
+        assertNotNull(customer);
+    }
+
+    @Test
+    @org.junit.jupiter.api.Order(3)
+    void updateCustomer() throws DaoException {
+        Customer updatedCustomer = CUSTOMERS_DAO_IMPL.findCustomerByName("Mikel Owen");
+        updatedCustomer.setFirstName("Nick Philips");
+        CUSTOMERS_DAO_IMPL.update(updatedCustomer);
+
+        Customer dbCustomer = CUSTOMERS_DAO_IMPL.findCustomerByName("Nick Philips");
+        assertEquals(updatedCustomer, dbCustomer);
+    }
+
+    @Test
+    @org.junit.jupiter.api.Order(4)
+    void deleteCustomer() throws DaoException, SQLException {
+        Customer deletedCustomer = CUSTOMERS_DAO_IMPL.findCustomerByName("Nick Philips");
+        CUSTOMERS_DAO_IMPL.delete(deletedCustomer.getId());
+        Customer dbCustomer = CUSTOMERS_DAO_IMPL.findCustomerByName("Nick Philips");
+        assertNull(dbCustomer);
     }
 
     @Test
