@@ -74,7 +74,7 @@ public class CustomersDaoImplementations extends CustomersDao {
     }
 
     @Override
-    public Customer findCustomerByFirstName(String patternName) throws DaoException {
+    public Customer findCustomerByName(String patternName) throws DaoException {
         Customer customer = null;
         try (Connection connection = ProjectDbConnectionCreator.createConnection();
              PreparedStatement statement = connection.prepareStatement(CustomersQueries.SELECT_USER_BY_USER_NAME)) {
@@ -97,6 +97,7 @@ public class CustomersDaoImplementations extends CustomersDao {
         try (Connection connection = ProjectDbConnectionCreator.createConnection();
              PreparedStatement statement = connection.prepareStatement(CustomersQueries.UPDATE_CUSTOMER_BY_ID)) {
             statement.setString(1, customer.getFirstName());
+            statement.setLong(2, customer.getId());
             statement.executeUpdate();
             return customer;
         } catch (SQLException e) {
