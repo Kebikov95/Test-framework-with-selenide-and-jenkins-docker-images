@@ -38,7 +38,6 @@ public class PersonBody {
         }
         PersonBody other = (PersonBody) obj;
         return new EqualsBuilder()
-                .appendSuper(super.equals(obj))
                 .append(name, other.name)
                 .append(job, other.job)
                 .append(id, other.id)

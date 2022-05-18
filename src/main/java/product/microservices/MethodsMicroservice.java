@@ -1,8 +1,8 @@
 package product.microservices;
 
-import framework.client.HttpClient;
-import framework.configuration.UriManager;
-import framework.response.HttpResponse;
+import api.client.HttpClient;
+import api.configuration.UriManager;
+import api.response.HttpResponse;
 import helpers.JsonRepresentation;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;

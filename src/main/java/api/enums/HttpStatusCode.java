@@ -1,4 +1,4 @@
-package framework.enums;
+package api.enums;
 
 public enum HttpStatusCode {
 

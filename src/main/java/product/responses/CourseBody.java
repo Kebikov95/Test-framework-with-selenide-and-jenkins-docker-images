@@ -31,7 +31,6 @@ public class CourseBody {
         }
         CourseBody other = (CourseBody) obj;
         return new EqualsBuilder()
-                .appendSuper(super.equals(obj))
                 .append(course, other.course)
                 .isEquals();
     }

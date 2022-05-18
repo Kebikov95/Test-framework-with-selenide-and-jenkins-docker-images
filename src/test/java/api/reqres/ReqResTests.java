@@ -1,7 +1,7 @@
 package api.reqres;
 
-import framework.enums.HttpStatusCode;
-import framework.response.HttpResponse;
+import api.enums.HttpStatusCode;
+import api.response.HttpResponse;
 import jdk.jfr.Description;
 import org.assertj.core.util.Strings;
 import org.json.simple.JSONObject;
